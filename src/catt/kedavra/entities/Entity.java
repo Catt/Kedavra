@@ -135,7 +135,7 @@ public abstract class Entity implements Collidable{
 	 * @param addend The amount to be added.
 	 */
 	public void addX(float addend){
-		this.position.set(position.getY() + addend,position.getY());
+		this.position.set(position.getX() + addend,position.getY());
 	}
 	
 	/**

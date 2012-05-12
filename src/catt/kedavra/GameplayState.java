@@ -13,11 +13,16 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import catt.kedavra.characters.Player;
+import catt.kedavra.components.RenderComponent;
+
 
 public class GameplayState extends BasicGameState {
 	
 	private Image imgBackground;
+	Image playerSpr;
 	private int stateID = -1;
+	Player player;
 	
 	//-----SLICK METHODS BELOW---------//
 	public GameplayState(int stateID){
@@ -31,11 +36,15 @@ public class GameplayState extends BasicGameState {
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException{
 		//Load the background image
-		imgBackground = new Image("img/sky.png");
+		imgBackground = new Image("img/grass.png");
+		playerSpr = new Image("img/player.png");
+		player = new Player(1,1);
+		player.addComponent(new RenderComponent(1, playerSpr));
 	}
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics gr) throws SlickException{
 		imgBackground.draw(0,0);
+		player.render(gc, null, gr);
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{

@@ -1,5 +1,7 @@
 package catt.kedavra.entities;
 
+import org.newdawn.slick.geom.Vector2f;
+
 /**
  * The Collidable interface is implemented by all Entities and allows them to be handled by the Great and Powerful Collidinator.
  * All Collidable Entities must adopt one of three collision types: NONE, which exempts the entity from collision checks; CIRCLE, 
@@ -22,6 +24,18 @@ public interface Collidable {
 	 * @return collisionType
 	 */
 	public int getCollisionType();
+	
+	/**
+	 * Fetches the collision radii of this object.
+	 * @return collisionRadii
+	 */
+	public int [] getCollisionRadii();
+	
+	/**
+	 * Fetches a copy of this object's position vector.
+	 * @return A copy of this object's position vector.
+	 */
+	public Vector2f getPosition();
 	
 	/**
 	 * This method is called automatically by the Great and Powerful Collidinator, after its Most Righteous Judgment has been exacted.

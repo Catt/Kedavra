@@ -34,6 +34,7 @@ public abstract class Entity implements Collidable{
 	private ArrayList<Renderable> renderers = new ArrayList<Renderable>();
 	/** The type of collision used by the Great and Powerful Collidinator in its Most Righteous Judgement. See Collidable for types. */
 	private int collisionType = 0;
+	private int collisionRadii [] = null;
 	
 	/**
 	 * Creates a new Entity with the specified id and collisionType.
@@ -44,6 +45,11 @@ public abstract class Entity implements Collidable{
 	{
 		this.id = id;
 		this.collisionType = collisionType;
+		if (collisionType == Collidable.CT_CIRCLE)
+			collisionRadii = new int[1];
+		else if (collisionType == Collidable.CT_RECTANGLE){
+			collisionRadii = new int[2];
+		}
 	}
 	
 	/**
@@ -60,6 +66,14 @@ public abstract class Entity implements Collidable{
 	 */
 	public int getCollisionType(){
 		return collisionType;
+	}
+	
+	/**
+	 * Fetches the collision radii of this Entity.
+	 * @return collisionRadii
+	 */
+	public int [] getCollisionRadii(){
+		return collisionRadii;
 	}
 	
 	/**

@@ -24,7 +24,7 @@ public abstract class Entity implements Collidable{
 	/** The unique id for this entity. */
 	private int id;
 	/** This entity's position, given in the Vector2f format (specific to the Slick2D library). */
-	private Vector2f position= new Vector2f(0,0);
+	private Vector2f position = new Vector2f(0,0);
 	
 	/** A list of all components added to this Entity. It's rarely used, as components are usually accessed as updaters or renderers. */
 	private ArrayList<Component> components = new ArrayList<Component>();

@@ -14,7 +14,8 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import catt.kedavra.characters.Player;
-import catt.kedavra.components.RenderComponent;
+import catt.kedavra.components.CoMovement;
+import catt.kedavra.components.CoRender;
 
 
 public class GameplayState extends BasicGameState {
@@ -39,16 +40,17 @@ public class GameplayState extends BasicGameState {
 		imgBackground = new Image("img/grass.png");
 		playerSpr = new Image("img/player.png");
 		player = new Player(1,1);
-		player.addComponent(new RenderComponent(1, playerSpr));
+		player.addComponent(new CoRender(1, playerSpr));
+		player.addComponent(new CoMovement(1, .0005f, .005f));
 	}
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics gr) throws SlickException{
 		imgBackground.draw(0,0);
-		player.render(gc, null, gr);
+		player.render(gc, sbg, gr);
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
-		
+		player.update(gc, sbg, delta);
 	}
 
 	//-----CUSTOM METHODS BELOW-------//	

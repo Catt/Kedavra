@@ -1,0 +1,21 @@
+_*_*_*_*_ FIXES AND CHANGES _*_*_*_*_
+ * * * *                     * * * *
+ 
+[1][2012-05-16-19:30]
+	
+	(001) Made Entity class variables protected, rather than private.  They can now be accessed by subclasses.
+	(002) Deleted Player class variables which are no longer necessary due to fix (001).
+	(003) Deleted CoMovement class variable <id>, which is inherited from Component and need not be declared.
+	(004) Moved all movement related class variables from Player to CoMovement.  Keep code in the components when possible.
+		  After all,  it'll be easier to switch out movement components (for flight, buffs, etc.) If the speeds are saved locally.
+	(005) Fixed initialization of Player and CoMovement for compatibility with fix (004).
+	(006) In initialization of Player, changed collisionType from <1> to <Collidable.TC_CIRCLE>.  It makes code more readable.
+	(007) In initialization of CoMovement, changed id from <1> to <2> to avoid conflicts with CoRender.
+	(008) Deleted getX() and getY() in CoMovement.  Getters are only needed if people have reason to access the variables.
+	(009) Made speedY in CoMovement private.  Not sure why it was set to public.
+	(010) Changed update() of CoMovement to use owner.addX() and owner.addY(), so the position vector doesn't have to be fetched.
+	(011) Gave CoMovement's update method a complete overhaul to resolve keystroke conflicts. See the code for specific changes.
+	(012) Lowered friction in CoMovement from 0.0015 to 0.0005.  It feels more realistic this way.
+	(013) Lowered the Player's baseSpeed from 0.15 to 0.11.
+	(014) Changed render() in CoRender so that the image is centered on the position.
+	(015) Added lots of javadoc comments.

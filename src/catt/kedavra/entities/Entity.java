@@ -21,20 +21,20 @@ import catt.kedavra.components.Updatable;
 public abstract class Entity implements Collidable{
 	
 	/** The unique id for this entity. */
-	private int id;
+	protected int id;
 	/** This entity's position, given in the Vector2f format (specific to the Slick2D library). */
-	private Vector2f position = new Vector2f(0,0);
+	protected Vector2f position = new Vector2f(0,0);
 	
 	/** A list of all components added to this Entity. It's rarely used, as components are usually accessed as updaters or renderers. */
-	private ArrayList<Component> components = new ArrayList<Component>();
+	protected ArrayList<Component> components = new ArrayList<Component>();
 	/** A list of all added components which have implemented the Updatable interface. */
-	private ArrayList<Updatable> updaters = new ArrayList<Updatable>();
+	protected ArrayList<Updatable> updaters = new ArrayList<Updatable>();
 	/** A list of all added components which have implemented the Renderable interface. */
-	private ArrayList<Renderable> renderers = new ArrayList<Renderable>();
+	protected ArrayList<Renderable> renderers = new ArrayList<Renderable>();
 	/** The type of collision used by the Great and Powerful Collidinator in its Most Righteous Judgement. See Collidable for types. */
-	private int collisionType = 0;
-	private int collisionRadii [] = null;
-	private float rotation;
+	protected int collisionType = 0;
+	protected int collisionRadii [] = null;
+	protected float rotation;
 	
 	/**
 	 * Creates a new Entity with the specified id and collisionType.

@@ -16,6 +16,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import catt.kedavra.characters.Player;
 import catt.kedavra.components.CoMovement;
 import catt.kedavra.components.CoRender;
+import catt.kedavra.entities.Collidable;
 
 
 public class GameplayState extends BasicGameState {
@@ -39,9 +40,9 @@ public class GameplayState extends BasicGameState {
 		//Load the background image
 		imgBackground = new Image("img/grass.png");
 		playerSpr = new Image("img/player.png");
-		player = new Player(1, 1 , .15f, .25f, .4f, .0004f, .0007f);
+		player = new Player(1, Collidable.CT_CIRCLE);
 		player.addComponent(new CoRender(1, playerSpr));
-		player.addComponent(new CoMovement(1));
+		player.addComponent(new CoMovement(2, .11f, .25f, .4f, .0004f, .0007f));
 	}
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics gr) throws SlickException{

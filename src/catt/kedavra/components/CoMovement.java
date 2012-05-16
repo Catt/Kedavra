@@ -2,50 +2,100 @@ package catt.kedavra.components;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
-import catt.kedavra.characters.*;
 
+/**
+ * The CoMovement Component can be added to an Entity to allow for 2-axis movement with the WSAD keys, as well as sprite orientation
+ * @author Zhengman77
+ * @author Catt
+ *
+ */
 public class CoMovement extends Component implements Updatable {
 	
-	private int id;
+	/** The owner's speed along the x-axis. */
 	private float speedX;
-	public float speedY;
-	private float friction = .0015f;
+	/** The owner's speed along the y-axis. */
+	private float speedY;
+	/** The amount of friction to simulate when moving. */
+	private float friction = .0005f;
+	/** Whether or not the owner is sprinting. */
 	private boolean sprint;
+	/** The owner's current orientation (in degrees) */
 	private float direction;
+	/** The speed at which the owner moves immediately (before acceleration). */
+	private float baseSpeed;
+	/** The max speed at which the owner can move while walking (after acceleration). */
+	private float maxWalk;
+	/** The max speed at which the owner can move while sprinting (after acceleration). */
+	private float maxSprint;
+	/** The owner's rate of acceleration while walking. */
+	private float walkAccel;
+	/** The owner's rate of acceleration while sprinting. */
+	private float sprintAccel;
+	//Used to resolve conflicting keystrokes in movement.
+	private int dominantX = 0;
+	private int dominantY = 0;
 	
-	public CoMovement(int id) {
+	/**
+	 * Initialize a new CoMovement Component, given movement specifications.
+	 * @param id The unique id for this Component.
+	 * @param baseSpeed The base speed before acceleration.
+	 * @param maxWalk The max walking speed after acceleration.
+	 * @param maxSprint The max sprinting speed after acceleration.
+	 * @param walkAccel The rate of acceleration, when walking.
+	 * @param sprintAccel The rate of acceleration, when sprinting.
+	 */
+	public CoMovement(int id, float baseSpeed, float maxWalk, float maxSprint, float walkAccel, float sprintAccel) {
 		this.id = id;
-	}
-	
-	public float getSpeedX() {
-		return speedX;
-	}
-	
-	public float getSpeedY() {
-		return speedY;
+		this.baseSpeed = baseSpeed;
+		this.maxWalk = maxWalk;
+		this.maxSprint = maxSprint;
+		this.walkAccel = walkAccel;
+		this.sprintAccel = sprintAccel;
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
-		Vector2f position = owner.getPosition();
-		Player player = (Player)owner;
-		float maxWalk = player.getMaxWalk();
-		float walkAccel = player.getWalkAccel();
-		float maxSprint = player.getMaxSprint();
-		float sprintAccel = player.getSprintAccel();
-		float baseSpeed = player.getBaseSpeed();
 		Input input = gc.getInput();
+		//c//Toggle sprint.
 		if(input.isKeyDown(Input.KEY_LSHIFT)) {
 			sprint = true;
 		}
 		else {
 			sprint = false;
 		}
+		//c//Find dominant directions.  Which ever key was more recently pressed becomes the dominant direction.
+		//c//If only one key is down, it becomes the dominant direction.
+		int pressedY = 0;
+		int pressedX = 0;
+		if(input.isKeyPressed(Input.KEY_W)){
+			dominantY = 1; pressedY = 1;
+		}
+		if(input.isKeyPressed(Input.KEY_S)){
+			dominantY = 2; pressedY = 2;
+		}
+		if(input.isKeyPressed(Input.KEY_A)){
+			dominantX = 1; pressedX = 1;
+		}
+		if(input.isKeyPressed(Input.KEY_D)){
+			dominantX = 2; pressedX = 2;
+		}
+		if(input.isKeyDown(Input.KEY_W) && !input.isKeyDown(Input.KEY_S))
+			dominantY = 1;
+		if(!input.isKeyDown(Input.KEY_W) && input.isKeyDown(Input.KEY_S))
+			dominantY = 2;
+		if(input.isKeyDown(Input.KEY_A) && !input.isKeyDown(Input.KEY_D))
+			dominantX = 1;
+		if(!input.isKeyDown(Input.KEY_A) && input.isKeyDown(Input.KEY_D))
+			dominantX = 2;
+		if(!input.isKeyDown(Input.KEY_W) && !input.isKeyDown(Input.KEY_S))
+			dominantY = 0;
+		if(!input.isKeyDown(Input.KEY_A) && !input.isKeyDown(Input.KEY_D))
+			dominantX = 0;
+		System.out.println(pressedY);
 		//Upwards movement
-		if(input.isKeyDown(Input.KEY_W)) {
+		if(input.isKeyDown(Input.KEY_W) && dominantY != 2) {
 			//If the player is starting from rest, he is given an immediate burst of speed
-			if(input.isKeyPressed(Input.KEY_W)) {
+			if(pressedY == 1) {
 				speedY = -baseSpeed;
 			}
 			//Walking acceleration w/ speed cap
@@ -58,7 +108,7 @@ public class CoMovement extends Component implements Updatable {
 				}
 			}
 			//Sprinting acceleration w/ speed cap
-			if(sprint == true) {
+			else{
 				if(speedY <= -maxSprint) {
 					speedY = -maxSprint;
 				}
@@ -68,9 +118,9 @@ public class CoMovement extends Component implements Updatable {
 			}
 		}
 		//Downwards movement
-		else if(input.isKeyDown(Input.KEY_S)) {
+		else if(input.isKeyDown(Input.KEY_S) && dominantY != 1) {
 			//If the player is starting from rest, he is given an immediate burst of speed
-			if(input.isKeyPressed(Input.KEY_S)) {
+			if(pressedY == 2) {
 				speedY = baseSpeed;
 			}
 			//Walking acceleration w/ speed cap
@@ -116,9 +166,9 @@ public class CoMovement extends Component implements Updatable {
 			}
 		}
 		//Left movement
-		if(input.isKeyDown(Input.KEY_A)) {
+		if(input.isKeyDown(Input.KEY_A) && dominantX != 2) {
 			//If the player is starting from rest, he is given an immediate burst of speed
-			if(input.isKeyPressed(Input.KEY_A)) {
+			if(pressedX == 1) {
 				speedX = -baseSpeed;
 			}
 			//Walking acceleration w/ speed cap
@@ -141,9 +191,9 @@ public class CoMovement extends Component implements Updatable {
 			}
 		}
 		//Right movement
-		else if(input.isKeyDown(Input.KEY_D)) {
+		else if(input.isKeyDown(Input.KEY_D) && dominantX != 1) {
 			//If the player is starting from rest, he is given an immediate burst of speed
-			if(input.isKeyPressed(Input.KEY_D)) {
+			if(pressedX == 2) {
 				speedX = baseSpeed;
 			}
 			//Walking acceleration w/ speed cap
@@ -189,9 +239,8 @@ public class CoMovement extends Component implements Updatable {
 			}
 		}
 		//Establish position
-		position.y += speedY*delta;
-		position.x += speedX*delta;
-		owner.setPosition(position);
+		owner.addX(speedX*delta);
+		owner.addY(speedY*delta);
 		//Rotation
 		direction = (float)Math.toDegrees(Math.atan2((input.getMouseY()-(owner.getY()+25)), (input.getMouseX()-(owner.getX()+25))))+90;
 		owner.setRotation(direction);

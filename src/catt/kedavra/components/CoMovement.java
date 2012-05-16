@@ -4,56 +4,187 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
+import catt.kedavra.characters.*;
 
 public class CoMovement extends Component implements Updatable {
 	
 	private int id;
 	private float speedX;
-	private float speedY;
-	private float maxWalk = .2f;
-	private float maxRun = .5f;
-	private float walkAccel;
-	private float runAccel;
-	private boolean running;
+	public float speedY;
+	private float friction = .0015f;
+	private boolean sprint;
 	
-	public CoMovement(int id, float walkAccel, float runAccel) {
+	public CoMovement(int id) {
 		this.id = id;
-		this.walkAccel = walkAccel;
-		this.runAccel = runAccel;
+	}
+	
+	public float getSpeedX() {
+		return speedX;
+	}
+	
+	public float getSpeedY() {
+		return speedY;
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
 		Vector2f position = owner.getPosition();
+		Player player = (Player)owner;
+		float maxWalk = player.getMaxWalk();
+		float walkAccel = player.getWalkAccel();
+		float maxSprint = player.getMaxSprint();
+		float sprintAccel = player.getSprintAccel();
+		float baseSpeed = player.getBaseSpeed();
 		Input input = gc.getInput();
 		if(input.isKeyDown(Input.KEY_LSHIFT)) {
-			running = true;
+			sprint = true;
 		}
+		else {
+			sprint = false;
+		}
+		//Upwards movement
 		if(input.isKeyDown(Input.KEY_W)) {
-			speedY -= walkAccel*delta;
+			//If the player is starting from rest, he is given an immediate burst of speed
+			if(input.isKeyPressed(Input.KEY_W)) {
+				speedY = -baseSpeed;
+			}
+			//Walking acceleration w/ speed cap
+			if(sprint == false) {
+				if(speedY <= -maxWalk) {
+					speedY = -maxWalk;
+				}
+				if(speedY > -maxWalk) {
+					speedY -= walkAccel*delta;
+				}
+			}
+			//Sprinting acceleration w/ speed cap
+			if(sprint == true) {
+				if(speedY <= -maxSprint) {
+					speedY = -maxSprint;
+				}
+				if(speedY > -maxSprint) {
+					speedY -= sprintAccel*delta;
+				}
+			}
 		}
+		//Downwards movement
 		else if(input.isKeyDown(Input.KEY_S)) {
-			speedY += walkAccel*delta;
+			//If the player is starting from rest, he is given an immediate burst of speed
+			if(input.isKeyPressed(Input.KEY_S)) {
+				speedY = baseSpeed;
+			}
+			//Walking acceleration w/ speed cap
+			if(sprint == false) {
+				if(speedY >= maxWalk) {
+					speedY = maxWalk;
+				}
+				if(speedY < maxWalk) {
+					speedY += walkAccel*delta;
+				}
+			}
+			//Sprinting acceleration w/ speed cap
+			if(sprint == true) {
+				if(speedY >= maxSprint) {
+					speedY = maxSprint;
+				}
+				if(speedY < maxSprint) {
+					speedY += sprintAccel*delta;
+				}
+			}
 		}
+		//Vertical Friction
 		else {
+			//For downwards movement
 			if(speedY < 0) {
-				speedY = 0;
+				//Prevents overshoot
+				if((speedY += friction*delta) > 0) {
+					speedY = 0;
+				}
+				else {
+					speedY += friction*delta;
+				}
 			}
+			//For upwards movement
 			if(speedY > 0) {
-				speedY = 0;
+				//Prevents overshoot
+				if((speedY -= friction*delta) < 0) {
+					speedY = 0;
+				}
+				else {
+					speedY -= friction*delta;
+				}
 			}
 		}
+		//Left movement
 		if(input.isKeyDown(Input.KEY_A)) {
-			speedX -= walkAccel*delta;
-		}
-		else if(input.isKeyDown(Input.KEY_D)) {
-			speedX += walkAccel*delta;
-		}
-		else {
-			if(speedX > 0) {
-				speedX = 0;
+			//If the player is starting from rest, he is given an immediate burst of speed
+			if(input.isKeyPressed(Input.KEY_A)) {
+				speedX = -baseSpeed;
 			}
+			//Walking acceleration w/ speed cap
+			if(sprint == false) {
+				if(speedX <= -maxWalk) {
+					speedX = -maxWalk;
+				}
+				if(speedX > -maxWalk) {
+					speedX -= walkAccel*delta;
+				}
+			}
+			//Sprinting acceleration w/ speed cap
+			if(sprint == true) {
+				if(speedX <= -maxSprint) {
+					speedX = -maxSprint;
+				}
+				if(speedY > -maxSprint) {
+					speedX -= sprintAccel*delta;
+				}
+			}
+		}
+		//Right movement
+		else if(input.isKeyDown(Input.KEY_D)) {
+			//If the player is starting from rest, he is given an immediate burst of speed
+			if(input.isKeyPressed(Input.KEY_D)) {
+				speedX = baseSpeed;
+			}
+			//Walking acceleration w/ speed cap
+			if(sprint == false) {
+				if(speedX >= maxWalk) {
+					speedX = maxWalk;
+				}
+				if(speedX < maxWalk) {
+					speedX += walkAccel*delta;
+				}
+			}
+			//Sprinting acceleration w/ speed cap
+			if(sprint == true) {
+				if(speedX >= maxSprint) {
+					speedX = maxSprint;
+				}
+				if(speedX < maxSprint) {
+					speedX += sprintAccel*delta;
+				}
+			}
+		}
+		//Horizontal Friction
+		else {
+			//For right movement
+			if(speedX > 0) {
+				//Prevents overshoot
+				if((speedX -= friction*delta) < 0) {
+					speedX = 0;
+				}
+				else {
+					speedX -= friction*delta;
+				}
+			}
+			//For left movement
 			if(speedX < 0) {
-				speedX = 0;
+				//Prevents overshoot
+				if((speedX += friction*delta) > 0) {
+					speedX = 0;
+				}
+				else {
+					speedX += friction*delta;
+				}
 			}
 		}
 		position.y += speedY*delta;

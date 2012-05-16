@@ -13,6 +13,7 @@ public class CoMovement extends Component implements Updatable {
 	public float speedY;
 	private float friction = .0015f;
 	private boolean sprint;
+	private float direction;
 	
 	public CoMovement(int id) {
 		this.id = id;
@@ -187,9 +188,13 @@ public class CoMovement extends Component implements Updatable {
 				}
 			}
 		}
+		//Establish position
 		position.y += speedY*delta;
 		position.x += speedX*delta;
 		owner.setPosition(position);
+		//Rotation
+		direction = (float)Math.toDegrees(Math.atan2((input.getMouseY()-(owner.getY()+25)), (input.getMouseX()-(owner.getX()+25))))+90;
+		owner.setRotation(direction);
 	}
 
 }

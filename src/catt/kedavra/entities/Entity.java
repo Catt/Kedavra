@@ -1,7 +1,6 @@
 package catt.kedavra.entities;
 
 import java.util.ArrayList;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
@@ -35,6 +34,7 @@ public abstract class Entity implements Collidable{
 	/** The type of collision used by the Great and Powerful Collidinator in its Most Righteous Judgement. See Collidable for types. */
 	private int collisionType = 0;
 	private int collisionRadii [] = null;
+	private float rotation;
 	
 	/**
 	 * Creates a new Entity with the specified id and collisionType.
@@ -126,6 +126,14 @@ public abstract class Entity implements Collidable{
 	 */
 	public void addPosition(Vector2f addend){
 		this.position.add(addend);
+	}
+	
+	public float getRotation() {
+		return rotation;
+	}
+	
+	public void setRotation(float rotate) {
+		rotation = rotate;
 	}
 	
 	/**

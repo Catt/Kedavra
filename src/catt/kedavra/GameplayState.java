@@ -39,9 +39,9 @@ public class GameplayState extends BasicGameState {
 		//Load the background image
 		imgBackground = new Image("img/grass.png");
 		playerSpr = new Image("img/player.png");
-		player = new Player(1,1);
+		player = new Player(1, 1 , .2f, .3f, .5f, .0005f, .0007f);
 		player.addComponent(new CoRender(1, playerSpr));
-		player.addComponent(new CoMovement(1, .0005f, .005f));
+		player.addComponent(new CoMovement(1));
 	}
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics gr) throws SlickException{

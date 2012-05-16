@@ -21,7 +21,7 @@ import catt.kedavra.components.CoRender;
 public class GameplayState extends BasicGameState {
 	
 	private Image imgBackground;
-	Image playerSpr;
+	protected Image playerSpr;
 	private int stateID = -1;
 	Player player;
 	
@@ -39,7 +39,7 @@ public class GameplayState extends BasicGameState {
 		//Load the background image
 		imgBackground = new Image("img/grass.png");
 		playerSpr = new Image("img/player.png");
-		player = new Player(1, 1 , .2f, .3f, .5f, .0005f, .0007f);
+		player = new Player(1, 1 , .15f, .25f, .4f, .0004f, .0007f);
 		player.addComponent(new CoRender(1, playerSpr));
 		player.addComponent(new CoMovement(1));
 	}

@@ -10,10 +10,10 @@ public class Player extends Entity {
 	
 	private int id;
 	private int collisionType;
-	private float baseSpeed = .2f;
+	private float baseSpeed;
 	//Speed caps
-	private float maxWalk = .3f;
-	private float maxSprint = .7f;
+	private float maxWalk;
+	private float maxSprint;
 	//Acceleration values
 	private float walkAccel;
 	private float sprintAccel;

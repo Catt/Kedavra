@@ -38,7 +38,9 @@ public class Kedavra extends StateBasedGame {
 	
 	@Override
 	public void initStatesList(GameContainer gameContainer) throws SlickException{
-		this.getState(MAINMENUSTATE).init(gameContainer, this);
-		this.getState(GAMEPLAYSTATE).init(gameContainer, this);
+		//c//Way back in the day, a Slick2d tutorial told me to make this method.  However, I discovered that it was causing
+		//c//All states to be initiated twice.  I keep the code here in case it does prove to be necessary for some obscure reason.
+		//this.getState(MAINMENUSTATE).init(gameContainer, this);
+		//this.getState(GAMEPLAYSTATE).init(gameContainer, this);
 	}
 }

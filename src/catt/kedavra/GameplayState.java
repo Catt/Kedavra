@@ -13,18 +13,18 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import catt.kedavra.characters.Player;
-import catt.kedavra.components.CoMovement;
-import catt.kedavra.components.CoRender;
-import catt.kedavra.entities.Collidable;
+import catt.kedavra.entities.Player;
+import catt.kedavra.entities.Rock;
 
 
 public class GameplayState extends BasicGameState {
 	
 	private Image imgBackground;
-	protected Image playerSpr;
 	private int stateID = -1;
-	Player player;
+	private Collidinator collidinator = new Collidinator();
+	private int id_ent = 0; //Used to iterate the unique id for entities.
+	private Player player;
+	private Rock [] rocks = new Rock [5];
 	
 	//-----SLICK METHODS BELOW---------//
 	public GameplayState(int stateID){
@@ -39,19 +39,32 @@ public class GameplayState extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException{
 		//Load the background image
 		imgBackground = new Image("img/grass.png");
-		playerSpr = new Image("img/player.png");
-		player = new Player(1, Collidable.CT_CIRCLE);
-		player.addComponent(new CoRender(1, playerSpr));
-		player.addComponent(new CoMovement(2, .11f, .25f, .4f, .0004f, .0007f));
+		//c//Populate the stage.
+		player = new Player(700,500,id_ent++);
+		collidinator.add(player);
+		rocks[0] = new Rock(100,100,id_ent++);
+		rocks[1] = new Rock(250,110,id_ent++);
+		rocks[2] = new Rock(90,400,id_ent++);
+		rocks[3] = new Rock(300,330,id_ent++);
+		rocks[4] = new Rock(600,25,id_ent++);
+		for(Rock rock: rocks)
+			collidinator.add(rock);
+		
+		
 	}
 	
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics gr) throws SlickException{
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException{
 		imgBackground.draw(0,0);
-		player.render(gc, sbg, gr);
+		for(Rock rock: rocks)
+			rock.render(gc, sbg, g);
+		player.render(gc, sbg, g);
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
+		for(Rock rock: rocks)
+			rock.update(gc, sbg, delta);
 		player.update(gc, sbg, delta);
+		collidinator.update(gc, sbg, delta);
 	}
 
 	//-----CUSTOM METHODS BELOW-------//	

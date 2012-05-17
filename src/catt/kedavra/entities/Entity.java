@@ -41,8 +41,9 @@ public abstract class Entity implements Collidable{
 	 * @param id This Entity's unique id.
 	 * @param collisionType This entity's collision type.  (See Collidable for collision type constants.)
 	 */
-	public Entity(int id, int collisionType)
+	public Entity(int x, int y, int id, int collisionType)
 	{
+		setX(x);setY(y);
 		this.id = id;
 		this.collisionType = collisionType;
 		if (collisionType == Collidable.CT_CIRCLE)
@@ -206,6 +207,13 @@ public abstract class Entity implements Collidable{
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g){
 		for(Renderable renderer : renderers)
 			renderer.render(gc, sbg, g);
+	}
+	
+	@Override
+	public String toString(){
+		StringBuilder sb = new StringBuilder("ID:");
+		sb.append(getId());
+		return sb.toString();
 	}
 
 }

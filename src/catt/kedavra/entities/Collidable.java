@@ -41,6 +41,6 @@ public interface Collidable {
 	 * This method is called automatically by the Great and Powerful Collidinator, after its Most Righteous Judgment has been exacted.
 	 * @param other The other Collidable object responsible this collision.
 	 */
-	public void collision(Collidable other);
+	public void collision(Collidable other, Vector2f offset);
 
 }

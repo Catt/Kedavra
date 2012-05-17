@@ -1,6 +1,20 @@
 _*_*_*_*_ FIXES AND CHANGES _*_*_*_*_
  * * * *                     * * * *
- 
+
+[2][2012-05-16-17:00]
+    
+    (001) Moved component addition for Player into its constructor.  This is where components should be added.
+    (002) Edited player sprite so that it has an arrow facing left.
+    (003) Simplified the rotation code for Player.
+    (004) Added Rock class.
+    (005) Created a simple collision roll.  See Collidinator and its use in GameplayState for more information.
+    (006) Specified a collision radius in Player's constructor.
+    (007) Added id_ent to GameplayState, which can be used as an iterator for Entity ids.
+    (008) Moved Player to the entities package, as it is an entity.  If further categorization is needed, sub-packages should be used.
+    (009) Deleted some useless debug code from CoMovement.
+    (010) Fixed a bug where all game states were getting initiated twice.
+    (011) Cluttered the garden.
+
 [1][2012-05-16-19:30]
 	
 	(001) Made Entity class variables protected, rather than private.  They can now be accessed by subclasses.

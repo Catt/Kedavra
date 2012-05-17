@@ -91,7 +91,6 @@ public class CoMovement extends Component implements Updatable {
 			dominantY = 0;
 		if(!input.isKeyDown(Input.KEY_A) && !input.isKeyDown(Input.KEY_D))
 			dominantX = 0;
-		System.out.println(pressedY);
 		//Upwards movement
 		if(input.isKeyDown(Input.KEY_W) && dominantY != 2) {
 			//If the player is starting from rest, he is given an immediate burst of speed
@@ -242,7 +241,7 @@ public class CoMovement extends Component implements Updatable {
 		owner.addX(speedX*delta);
 		owner.addY(speedY*delta);
 		//Rotation
-		direction = (float)Math.toDegrees(Math.atan2((input.getMouseY()-(owner.getY()+25)), (input.getMouseX()-(owner.getX()+25))))+90;
+		direction = (float)Math.toDegrees(Math.atan2((input.getMouseY()-owner.getY()),(input.getMouseX()-owner.getX())));
 		owner.setRotation(direction);
 	}
 

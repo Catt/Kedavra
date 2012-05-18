@@ -5,12 +5,12 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
- * The CoMovement Component can be added to an Entity to allow for 2-axis movement with the WSAD keys, as well as sprite orientation
+ * The CoMovePlayer Component can be added to an Entity to allow for 2-axis movement with the WSAD keys, as well as sprite orientation
  * @author Zhengman77
  * @author Catt
  *
  */
-public class CoMovement extends Component implements Updatable {
+public class CoMovePlayer extends Component implements Updatable {
 	
 	/** The owner's speed along the x-axis. */
 	private float speedX;
@@ -20,8 +20,8 @@ public class CoMovement extends Component implements Updatable {
 	private float friction = .0005f;
 	/** Whether or not the owner is sprinting. */
 	private boolean sprint;
-	/** The owner's current orientation (in degrees) */
-	private float direction;
+	/** The owner's current orientation (in degrees). */
+	private float rotation;
 	/** The speed at which the owner moves immediately (before acceleration). */
 	private float baseSpeed;
 	/** The max speed at which the owner can move while walking (after acceleration). */
@@ -37,7 +37,7 @@ public class CoMovement extends Component implements Updatable {
 	private int dominantY = 0;
 	
 	/**
-	 * Initialize a new CoMovement Component, given movement specifications.
+	 * Initialize a new CoMovePlayer Component, given movement specifications.
 	 * @param id The unique id for this Component.
 	 * @param baseSpeed The base speed before acceleration.
 	 * @param maxWalk The max walking speed after acceleration.
@@ -45,7 +45,7 @@ public class CoMovement extends Component implements Updatable {
 	 * @param walkAccel The rate of acceleration, when walking.
 	 * @param sprintAccel The rate of acceleration, when sprinting.
 	 */
-	public CoMovement(int id, float baseSpeed, float maxWalk, float maxSprint, float walkAccel, float sprintAccel) {
+	public CoMovePlayer(int id, float baseSpeed, float maxWalk, float maxSprint, float walkAccel, float sprintAccel) {
 		this.id = id;
 		this.baseSpeed = baseSpeed;
 		this.maxWalk = maxWalk;
@@ -241,8 +241,8 @@ public class CoMovement extends Component implements Updatable {
 		owner.addX(speedX*delta);
 		owner.addY(speedY*delta);
 		//Rotation
-		direction = (float)Math.toDegrees(Math.atan2((input.getMouseY()-owner.getY()),(input.getMouseX()-owner.getX())));
-		owner.setRotation(direction);
+		rotation = (float)Math.toDegrees(Math.atan2((input.getMouseY()-owner.getY()),(input.getMouseX()-owner.getX())));
+		owner.setRotation(rotation);
 	}
 
 }

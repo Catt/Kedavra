@@ -18,7 +18,7 @@ import catt.kedavra.entities.Collidable;
  */
 public class Collidinator implements Updatable {
 	
-	private ArrayList<Collidable> collisionRoll = new ArrayList<Collidable>();
+	protected ArrayList<Collidable> collisionRoll = new ArrayList<Collidable>();
 	
 	/**
 	 * Adds the specified Collidable Entity to the collision roll.

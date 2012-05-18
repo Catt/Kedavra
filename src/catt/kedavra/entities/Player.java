@@ -4,7 +4,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-import catt.kedavra.components.CoMovement;
+import catt.kedavra.components.CoCastPlayer;
+import catt.kedavra.components.CoMovePlayer;
 import catt.kedavra.components.CoRender;
 
 /**
@@ -17,8 +18,9 @@ public class Player extends Entity {
 	
 	/**
 	 * Creates a new Player Entity with the specified id and collisionType.
+	 * @param x This Entity's x position.
+	 * @param y This Entity's y position.
 	 * @param id This Entity's unique id.
-	 * @param collisionType This entity's collision type.  (See Collidable for collision type constants.)
 	 */
 	public Player(int x, int y, int id) {
 		super(x, y, id, Collidable.CT_CIRCLE);
@@ -29,7 +31,8 @@ public class Player extends Entity {
 			System.out.println("Could not load img/player.png");
 		}
 		//c//Add WSAD movement with mouse orientation.
-		addComponent(new CoMovement(1, .11f, .25f, .4f, .0004f, .0007f));
+		addComponent(new CoMovePlayer(1, .11f, .25f, .4f, .0004f, .0007f));
+		addComponent(new CoCastPlayer(2));
 		//c//Set the bounding circle's size.
 		collisionRadii[0] = 32;
 		

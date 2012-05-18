@@ -1,6 +1,18 @@
 _*_*_*_*_ FIXES AND CHANGES _*_*_*_*_
  * * * *                     * * * *
 
+[3][2012-05-17-]
+
+	(001) Changed the id of CoRender in Rock to be consistent with the component id's of Player.
+	(002) Added Incendio class.
+	(003) Added CoMoveLinear class.
+	(004) Added CoCastPlayer class.
+	(005) Renamed CoMovement to CoMovePlayer.
+	(006) Renamed the variable "direction" to "rotation" in CoMovePlayer to keep things clear.
+	(007) Added llUpdated and llRendered LinkedLists.
+	(008) Added addUpdated and addRendered methods to GameplayState.
+	(009) Changed the visibility of Collidinator's collisionRoll to protected for access by GameplayState when adding the rocks ArrayList.
+
 [2][2012-05-16-17:00]
     
     (001) Moved component addition for Player into its constructor.  This is where components should be added.

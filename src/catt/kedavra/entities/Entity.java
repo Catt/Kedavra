@@ -31,7 +31,7 @@ public abstract class Entity implements Collidable{
 	protected ArrayList<Updatable> updaters = new ArrayList<Updatable>();
 	/** A list of all added components which have implemented the Renderable interface. */
 	protected ArrayList<Renderable> renderers = new ArrayList<Renderable>();
-	/** The type of collision used by the Great and Powerful Collidinator in its Most Righteous Judgement. See Collidable for types. */
+	/** The type of collision used by the Great and Powerful Collidinator in its Most Righteous Judgment. See Collidable for types. */
 	protected int collisionType = 0;
 	protected int collisionRadii [] = null;
 	protected float rotation;
@@ -129,10 +129,18 @@ public abstract class Entity implements Collidable{
 		this.position.add(addend);
 	}
 	
+	/**
+	 * Fetches the rotation of this Entity.
+	 * @return The rotation
+	 */
 	public float getRotation() {
 		return rotation;
 	}
 	
+	/** 
+	 * Sets this Entity's rotation. 
+	 * @param rotate
+	 */
 	public void setRotation(float rotate) {
 		rotation = rotate;
 	}

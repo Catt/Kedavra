@@ -33,6 +33,8 @@ public class GameplayState extends BasicGameState {
 	private LinkedList<Entity> llUpdated = new LinkedList<Entity>(); 
 	private LinkedList<Entity> queueRender = new LinkedList<Entity>();
 	private LinkedList<Entity> queueUpdate = new LinkedList<Entity>(); 
+	private LinkedList<Entity> queueRemoveRender = new LinkedList<Entity>();
+	private LinkedList<Entity> queueRemoveUpdate = new LinkedList<Entity>();
 	
 	//-----SLICK METHODS BELOW---------//
 	public GameplayState(int stateID){
@@ -50,6 +52,14 @@ public class GameplayState extends BasicGameState {
 	
 	public void addUpdated(Entity e) {
 		queueUpdate.add(e);
+	}
+	
+	public void removeRendered(Entity e) {
+		queueRemoveRender.add(e);
+	}
+	
+	public void removeUpdated(Entity e) {
+		queueRemoveUpdate.add(e);
 	}
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException{
@@ -76,6 +86,8 @@ public class GameplayState extends BasicGameState {
 		//c//Add the new renderable Entities to the list before rendering.
 		llRendered.addAll(queueRender);
 		queueRender.clear();
+		llRendered.removeAll(queueRemoveRender);
+		queueRemoveRender.clear();
 		imgBackground.draw(0,0);
 		for(Entity e: llRendered)
 			e.render(gc, sbg, g);
@@ -85,6 +97,8 @@ public class GameplayState extends BasicGameState {
 		//c//Add the new renderable Entities to the list before rendering.
 		llUpdated.addAll(queueUpdate);
 		queueUpdate.clear();
+		llUpdated.removeAll(queueRemoveUpdate);
+		queueRemoveUpdate.clear();
 		for(Entity e: llUpdated)
 			e.update(gc, sbg, delta);
 		collidinator.update(gc, sbg, delta);

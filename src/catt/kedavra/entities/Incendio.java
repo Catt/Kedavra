@@ -2,9 +2,16 @@ package catt.kedavra.entities;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Vector2f;
 import catt.kedavra.components.CoMoveLinear;
 import catt.kedavra.components.CoRender;
+
+/**
+ * This Entity is a missile spell which sets things on fire.
+ * @author Zhengman777
+ * @author Catt
+ */
 
 public class Incendio extends Entity {
 	
@@ -21,12 +28,14 @@ public class Incendio extends Entity {
 		
 		try {
 			addComponent(new CoRender(0, new Image("img/incendio.png")));
+			Sound sndIncendio = new Sound("snd/incendio.wav");
+			sndIncendio.play();
 		} catch (SlickException e) {
 			System.out.println("Could not load img/incendio.png");
 		}
 		this.rotation = rotation;
 		//Add movement.
-		addComponent(new CoMoveLinear(1, .1f, rotation));
+		addComponent(new CoMoveLinear(1, .5f, rotation, 400));
 		//Set the bounding circle's size.
 		collisionRadii[0] = 15;
 	}

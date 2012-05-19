@@ -1,6 +1,15 @@
 _*_*_*_*_ FIXES AND CHANGES _*_*_*_*_
  * * * *                     * * * *
 
+[5][2012-05-19-14:00]
+
+	(001) Added queues for removing elements from llRendered and llUpdated.
+	(002) Gave CoMoveLinear the ability to remove owners from llRendered/llUpdated if the owner travels a certain distance.
+	(003) Fixed trajectory calculation in CoMoveLinear by converting to radians.
+	(004) Changed player.png and the collisionRadii of Player.
+	(005) Spells are now created at the edge of the owner's collision radius.
+	(006) Added incendio.wav.
+
 [4][2012-05-19-01:00]
 
     (001) Reverted fix (009) in revision [3].  Used Collidinator.add() instead.
@@ -8,7 +17,7 @@ _*_*_*_*_ FIXES AND CHANGES _*_*_*_*_
     (003) Fixed a concurrent modification error in adding Entities to llRendered and llUpdated during the render and update methods.
     (004) Fixed the null pointer error in CoMoveLinear, which was trying to access its (non-existent) owner in the constructor.
 
-[3][2012-05-17-]
+[3][2012-05-17-12:00]
 
 	(001) Changed the id of CoRender in Rock to be consistent with the component id's of Player.
 	(002) Added Incendio class.

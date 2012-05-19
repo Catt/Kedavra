@@ -34,7 +34,7 @@ public class Player extends Entity {
 		addComponent(new CoMovePlayer(1, .11f, .25f, .4f, .0004f, .0007f));
 		addComponent(new CoCastPlayer(2));
 		//c//Set the bounding circle's size.
-		collisionRadii[0] = 32;
+		collisionRadii[0] = 25;
 		
 		
 	}

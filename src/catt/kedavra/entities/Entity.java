@@ -34,7 +34,7 @@ public abstract class Entity implements Collidable{
 	/** The type of collision used by the Great and Powerful Collidinator in its Most Righteous Judgment. See Collidable for types. */
 	protected int collisionType = 0;
 	protected int collisionRadii [] = null;
-	protected float rotation;
+	protected float rotation = 0;
 	
 	/**
 	 * Creates a new Entity with the specified id and collisionType.

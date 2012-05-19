@@ -1,6 +1,13 @@
 _*_*_*_*_ FIXES AND CHANGES _*_*_*_*_
  * * * *                     * * * *
 
+[4][2012-05-19-01:00]
+
+    (001) Reverted fix (009) in revision [3].  Used Collidinator.add() instead.
+    (002) Removed unneeded declaration of rotation in Incendio. 
+    (003) Fixed a concurrent modification error in adding Entities to llRendered and llUpdated during the render and update methods.
+    (004) Fixed the null pointer error in CoMoveLinear, which was trying to access its (non-existent) owner in the constructor.
+
 [3][2012-05-17-]
 
 	(001) Changed the id of CoRender in Rock to be consistent with the component id's of Player.

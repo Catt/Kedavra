@@ -8,7 +8,6 @@ import catt.kedavra.components.CoRender;
 
 public class Incendio extends Entity {
 	
-	float rotation;
 	
 	/**
 	 * Creates a new Incendio.
@@ -27,7 +26,7 @@ public class Incendio extends Entity {
 		}
 		this.rotation = rotation;
 		//Add movement.
-		addComponent(new CoMoveLinear(1, .1f));
+		addComponent(new CoMoveLinear(1, .1f, rotation));
 		//Set the bounding circle's size.
 		collisionRadii[0] = 15;
 	}

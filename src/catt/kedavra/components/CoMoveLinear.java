@@ -22,10 +22,10 @@ public class CoMoveLinear extends Component implements Updatable {
 	 * @param id The unique id for this Component.
 	 * @param speed The speed at which the Entity moves.
 	 */
-	public CoMoveLinear(int id, float speed) {
+	public CoMoveLinear(int id, float speed, float rotation) {
 		this.id = id;
 		this.speed = speed;
-		rotation = owner.getRotation();
+		this.rotation = rotation;
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) {

@@ -31,6 +31,8 @@ public class GameplayState extends BasicGameState {
 	//private Rock [] rocks = new Rock [5];
 	private LinkedList<Entity> llRendered = new LinkedList<Entity>();
 	private LinkedList<Entity> llUpdated = new LinkedList<Entity>(); 
+	private LinkedList<Entity> queueRender = new LinkedList<Entity>();
+	private LinkedList<Entity> queueUpdate = new LinkedList<Entity>(); 
 	
 	//-----SLICK METHODS BELOW---------//
 	public GameplayState(int stateID){
@@ -43,11 +45,11 @@ public class GameplayState extends BasicGameState {
 	}
 	
 	public void addRendered(Entity e) {
-		llRendered.add(e);
+		queueRender.add(e);
 	}
 	
 	public void addUpdated(Entity e) {
-		llUpdated.add(e);
+		queueUpdate.add(e);
 	}
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException{
@@ -65,17 +67,24 @@ public class GameplayState extends BasicGameState {
 		rocks.add(new Rock(600,25,id_ent++));
 		llRendered.addAll(rocks);
 		llUpdated.addAll(rocks);
-		collidinator.collisionRoll.addAll(rocks);
+		for(Rock rock : rocks)
+			collidinator.add(rock);
 		
 	}
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException{
+		//c//Add the new renderable Entities to the list before rendering.
+		llRendered.addAll(queueRender);
+		queueRender.clear();
 		imgBackground.draw(0,0);
 		for(Entity e: llRendered)
 			e.render(gc, sbg, g);
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
+		//c//Add the new renderable Entities to the list before rendering.
+		llUpdated.addAll(queueUpdate);
+		queueUpdate.clear();
 		for(Entity e: llUpdated)
 			e.update(gc, sbg, delta);
 		collidinator.update(gc, sbg, delta);

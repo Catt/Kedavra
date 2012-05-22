@@ -3,7 +3,9 @@ package catt.kedavra.entities;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
+import org.newdawn.slick.state.StateBasedGame;
 
+import catt.kedavra.GameplayState;
 import catt.kedavra.components.CoRender;
 import catt.kedavra.entities.Collidable;
 import catt.kedavra.entities.Entity;
@@ -35,7 +37,18 @@ public class Rock extends Entity {
 		
 	}
 	
-	public void collision(Collidable other, Vector2f offset) {
+	public void collision(StateBasedGame sbg, Collidable other, Vector2f offset) {
+		
+		GameplayState gps = (GameplayState)sbg.getCurrentState();
+		
+		if (Incendio.class.isInstance(other)){
+			Spark spark = new Spark((int)(getX()-offset.x*collisionRadii[0]), (int)(getY()-offset.y*collisionRadii[0]), gps.getID_ent());
+			gps.addRendered(spark);
+			gps.addUpdated(spark);
+			gps.removeRendered((Entity)other);
+			gps.removeUpdated((Entity)other);
+			gps.removeCollider((Entity)other);
+		}
 		
 	}
 

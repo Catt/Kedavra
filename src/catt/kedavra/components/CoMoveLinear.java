@@ -41,6 +41,7 @@ public class CoMoveLinear extends Component implements Updatable {
 		if(speed*delta+distance > range) {
 			((GameplayState)sbg.getCurrentState()).removeRendered(owner);
 			((GameplayState)sbg.getCurrentState()).removeUpdated(owner);
+			((GameplayState)sbg.getCurrentState()).removeCollider(owner);
 		}
 		else {
 			distance += speed*delta;

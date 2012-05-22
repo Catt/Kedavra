@@ -1,6 +1,7 @@
 package catt.kedavra.entities;
 
 import org.newdawn.slick.geom.Vector2f;
+import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * The Collidable interface is implemented by all Entities and allows them to be handled by the Great and Powerful Collidinator.
@@ -41,6 +42,6 @@ public interface Collidable {
 	 * This method is called automatically by the Great and Powerful Collidinator, after its Most Righteous Judgment has been exacted.
 	 * @param other The other Collidable object responsible this collision.
 	 */
-	public void collision(Collidable other, Vector2f offset);
+	public void collision(StateBasedGame sbg, Collidable other, Vector2f offset);
 
 }

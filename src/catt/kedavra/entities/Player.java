@@ -3,6 +3,7 @@ package catt.kedavra.entities;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
+import org.newdawn.slick.state.StateBasedGame;
 
 import catt.kedavra.components.CoCastPlayer;
 import catt.kedavra.components.CoMovePlayer;
@@ -39,9 +40,10 @@ public class Player extends Entity {
 		
 	}
 	
-	public void collision(Collidable other, Vector2f offset) {
-		//c//Keep the player from getting stuck inside things.
-		addPosition(offset);
-	}
+	public void collision(StateBasedGame sbg, Collidable other, Vector2f offset) {
+		//c//Keep the player from getting stuck inside rocks.
+		if(Rock.class.isInstance(other))
+			addPosition(offset);
+	}	
 
 }

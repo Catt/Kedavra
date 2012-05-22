@@ -46,7 +46,7 @@ public class Collidinator implements Updatable {
 				for(int j = i+1; j < collisionRoll.size(); ++j){
 					Collidable b = collisionRoll.get(j);
 					if (b.getCollisionType() != Collidable.CT_NONE){
-						Collidinator.collide(a, b);
+						Collidinator.collide(sbg, a, b);
 						//System.out.print(a.toString());System.out.print(" , ");System.out.println(b.toString());
 					}
 				}	
@@ -58,7 +58,7 @@ public class Collidinator implements Updatable {
 	 * @param a A Collidable object
 	 * @param b Another Collidable object
 	 */
-	public static void collide(Collidable a, Collidable b){
+	public static void collide(StateBasedGame sbg, Collidable a, Collidable b){
 		
 		//c//If either Collidable has collisions disabled, do nothing.
 		if (a.getCollisionType() == Collidable.CT_NONE || b.getCollisionType() == Collidable.CT_NONE)
@@ -79,8 +79,8 @@ public class Collidinator implements Updatable {
 				vecB.set(Math.abs(offset), 0);
 				vecB.setTheta(Math.toDegrees(Math.atan2((b.getPosition().y-a.getPosition().y),(b.getPosition().x-a.getPosition().x))));
 				//c//Collide!
-				a.collision(b,vecA);
-				b.collision(a,vecB);
+				a.collision(sbg, b, vecA);
+				b.collision(sbg, a, vecB);
 			}
 			
 		}

@@ -18,6 +18,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import catt.kedavra.entities.Entity;
 import catt.kedavra.entities.Player;
 import catt.kedavra.entities.Rock;
+import catt.kedavra.entities.Spark;
 
 
 public class GameplayState extends BasicGameState {
@@ -27,6 +28,7 @@ public class GameplayState extends BasicGameState {
 	private Collidinator collidinator = new Collidinator();
 	private int id_ent = 0; //Used to iterate the unique id for entities.
 	private Player player;
+	private Spark spark;
 	private ArrayList<Rock> rocks = new ArrayList<Rock>();
 	//private Rock [] rocks = new Rock [5];
 	private LinkedList<Entity> llRendered = new LinkedList<Entity>();
@@ -46,12 +48,20 @@ public class GameplayState extends BasicGameState {
 		return stateID;
 	}
 	
+	public int getID_ent(){
+		return id_ent;
+	}
+	
 	public void addRendered(Entity e) {
 		queueRender.add(e);
 	}
 	
 	public void addUpdated(Entity e) {
 		queueUpdate.add(e);
+	}
+	
+	public void addCollider(Entity e) {
+		collidinator.add(e);
 	}
 	
 	public void removeRendered(Entity e) {
@@ -62,6 +72,10 @@ public class GameplayState extends BasicGameState {
 		queueRemoveUpdate.add(e);
 	}
 	
+	public void removeCollider(Entity e){
+		collidinator.remove(e);
+	}
+	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException{
 		//Load the background image
 		imgBackground = new Image("img/grass.png");
@@ -70,6 +84,9 @@ public class GameplayState extends BasicGameState {
 		llRendered.add(player);
 		llUpdated.add(player);
 		collidinator.add(player);
+		spark = new Spark(700,500,id_ent++);
+		llRendered.add(spark);
+		llUpdated.add(spark);
 		rocks.add(new Rock(100,100,id_ent++));
 		rocks.add(new Rock(250,110,id_ent++));
 		rocks.add(new Rock(90,400,id_ent++));

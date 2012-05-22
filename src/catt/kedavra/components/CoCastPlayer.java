@@ -30,6 +30,7 @@ public class CoCastPlayer extends Component implements Updatable{
 			Incendio incendio = new Incendio((int)(owner.getX()+Math.cos(Math.toRadians(owner.getRotation()))*owner.getCollisionRadii()[0]),(int)(owner.getY()+Math.sin(Math.toRadians(owner.getRotation()))*owner.getCollisionRadii()[0]),0,owner.getRotation());
 			((GameplayState)sbg.getCurrentState()).addRendered(incendio);
 			((GameplayState)sbg.getCurrentState()).addUpdated(incendio);
+			((GameplayState)sbg.getCurrentState()).addCollider(incendio);
 			
 		}
 	}

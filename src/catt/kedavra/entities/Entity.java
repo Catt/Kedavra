@@ -33,7 +33,9 @@ public abstract class Entity implements Collidable{
 	protected ArrayList<Renderable> renderers = new ArrayList<Renderable>();
 	/** The type of collision used by the Great and Powerful Collidinator in its Most Righteous Judgment. See Collidable for types. */
 	protected int collisionType = 0;
+	/** The radius (or radii) used for collision detection bounding circles (or boxes). */
 	protected int collisionRadii [] = null;
+	/** This Entity's rotation in 2D space. */
 	protected float rotation = 0;
 	
 	/**

@@ -1,6 +1,13 @@
 _*_*_*_*_ FIXES AND CHANGES _*_*_*_*_
  * * * *                     * * * *
 
+[6][2012-05-22-17:15]
+	(001) Added an add/remover for Collidable in the GameplayState.  I'm considering overhauling access code for GameplayState.
+	(002) Changed Collidinator and Collidable to pass the StateBasedGame to collision methods (so you can add/remove during collisions).
+	(003) Added CoTimedRemoval (mighty useful, if I do say so myself!)
+	(004) Added CoAnimate.  Use: CoAnimate(id, Image with spritesheet, width of each tile in sheet, length of each tile in sheet).
+	(005) Added a collision between Incendio and Rocks. (Spark positioning is a bit buggy.)
+
 [5][2012-05-19-14:00]
 
 	(001) Added queues for removing elements from llRendered and llUpdated.

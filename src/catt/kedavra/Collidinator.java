@@ -81,9 +81,8 @@ public class Collidinator implements Updatable {
 				//c//Collide!
 				a.collision(sbg, b, vecA);
 				b.collision(sbg, a, vecB);
-				return;
 			}
-			
+			return;
 		}
 		//c//If both Collidables have bounding rectangles, use rectangular radii to find overlap.
 		if (a.getCollisionType() == Collidable.CT_RECTANGLE && b.getCollisionType() == Collidable.CT_RECTANGLE){
@@ -105,13 +104,11 @@ public class Collidinator implements Updatable {
 							//Collision to the right.
 							a.collision(sbg, b, new Vector2f(-overlapX,0));
 							b.collision(sbg, a, new Vector2f(overlapX,0));
-							return;
 						}
 						else{
 							//Collision to the left.
 							a.collision(sbg, b, new Vector2f(overlapX,0));
 							b.collision(sbg, a, new Vector2f(-overlapX,0));
-							return;
 						}	
 					}
 					else{
@@ -119,17 +116,16 @@ public class Collidinator implements Updatable {
 							//Collision below.
 							a.collision(sbg, b, new Vector2f(0,-overlapY));
 							b.collision(sbg, a, new Vector2f(0,overlapY));
-							return;
 						}
 						else{
 							//Collision above.
 							a.collision(sbg, b, new Vector2f(0,overlapY));
 							b.collision(sbg, a, new Vector2f(0,-overlapY));
-							return;
 						}
 					}
 				}
 			}
+			return;
 		}
 		
 		//c//If the Collidables have different bounding types, do some magic.
@@ -159,13 +155,11 @@ public class Collidinator implements Updatable {
 						//Collision to the right.
 						a.collision(sbg, b, new Vector2f(-overlapX,0));
 						b.collision(sbg, a, new Vector2f(overlapX,0));
-						return;
 					}
 					else{
 						//Collision to the left.
 						a.collision(sbg, b, new Vector2f(overlapX,0));
 						b.collision(sbg, a, new Vector2f(-overlapX,0));
-						return;
 					}	
 				}
 				else{
@@ -173,13 +167,11 @@ public class Collidinator implements Updatable {
 						//Collision below.
 						a.collision(sbg, b, new Vector2f(0,-overlapY));
 						b.collision(sbg, a, new Vector2f(0,overlapY));
-						return;
 					}
 					else{
 						//Collision above.
 						a.collision(sbg, b, new Vector2f(0,overlapY));
 						b.collision(sbg, a, new Vector2f(0,-overlapY));
-						return;
 					}
 				}
 			}

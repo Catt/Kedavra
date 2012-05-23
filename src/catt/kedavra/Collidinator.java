@@ -81,8 +81,108 @@ public class Collidinator implements Updatable {
 				//c//Collide!
 				a.collision(sbg, b, vecA);
 				b.collision(sbg, a, vecB);
+				return;
 			}
 			
+		}
+		//c//If both Collidables have bounding rectangles, use rectangular radii to find overlap.
+		if (a.getCollisionType() == Collidable.CT_RECTANGLE && b.getCollisionType() == Collidable.CT_RECTANGLE){
+			//Get the distance components between the two entities.
+			float distX = a.getPosition().getX() - b.getPosition().getX();
+			float distY = a.getPosition().getY() - b.getPosition().getY();
+			float hws = a.getCollisionRadii()[0]+b.getCollisionRadii()[0];
+			float hhs = a.getCollisionRadii()[1]+b.getCollisionRadii()[1];
+			//If the entities are intersecting on the Y axis...
+			if (hhs >= Math.abs(distY)){
+				//And the Y axis...
+				if (hws > Math.abs(distX)){
+					//Get the overlap between the two entities.
+					float overlapX = hws - Math.abs(distX);
+					float overlapY = hhs - Math.abs(distY);
+					
+					if(Math.abs(overlapX)<Math.abs(overlapY)){
+						if(distX < 0){
+							//Collision to the right.
+							a.collision(sbg, b, new Vector2f(-overlapX,0));
+							b.collision(sbg, a, new Vector2f(overlapX,0));
+							return;
+						}
+						else{
+							//Collision to the left.
+							a.collision(sbg, b, new Vector2f(overlapX,0));
+							b.collision(sbg, a, new Vector2f(-overlapX,0));
+							return;
+						}	
+					}
+					else{
+						if(distY < 0){
+							//Collision below.
+							a.collision(sbg, b, new Vector2f(0,-overlapY));
+							b.collision(sbg, a, new Vector2f(0,overlapY));
+							return;
+						}
+						else{
+							//Collision above.
+							a.collision(sbg, b, new Vector2f(0,overlapY));
+							b.collision(sbg, a, new Vector2f(0,-overlapY));
+							return;
+						}
+					}
+				}
+			}
+		}
+		
+		//c//If the Collidables have different bounding types, do some magic.
+		float distX, distY, hws, hhs;
+		if(a.getCollisionType() == Collidable.CT_RECTANGLE){
+			distX = a.getPosition().getX() - b.getPosition().getX();
+			distY = a.getPosition().getY() - b.getPosition().getY();
+			hws = a.getCollisionRadii()[0]+b.getCollisionRadii()[0];
+			hhs = a.getCollisionRadii()[1]+b.getCollisionRadii()[0];
+		}
+		else{
+			distX = a.getPosition().getX() - b.getPosition().getX();
+			distY = a.getPosition().getY() - b.getPosition().getY();
+			hws = a.getCollisionRadii()[0]+b.getCollisionRadii()[0];
+			hhs = a.getCollisionRadii()[0]+b.getCollisionRadii()[1];
+		}
+		//If the entities are intersecting on the Y axis...
+		if (hhs >= Math.abs(distY)){
+			//And the Y axis...
+			if (hws > Math.abs(distX)){
+				//Get the overlap between the two entities.
+				float overlapX = hws - Math.abs(distX);
+				float overlapY = hhs - Math.abs(distY);
+				
+				if(Math.abs(overlapX)<Math.abs(overlapY)){
+					if(distX < 0){
+						//Collision to the right.
+						a.collision(sbg, b, new Vector2f(-overlapX,0));
+						b.collision(sbg, a, new Vector2f(overlapX,0));
+						return;
+					}
+					else{
+						//Collision to the left.
+						a.collision(sbg, b, new Vector2f(overlapX,0));
+						b.collision(sbg, a, new Vector2f(-overlapX,0));
+						return;
+					}	
+				}
+				else{
+					if(distY < 0){
+						//Collision below.
+						a.collision(sbg, b, new Vector2f(0,-overlapY));
+						b.collision(sbg, a, new Vector2f(0,overlapY));
+						return;
+					}
+					else{
+						//Collision above.
+						a.collision(sbg, b, new Vector2f(0,overlapY));
+						b.collision(sbg, a, new Vector2f(0,-overlapY));
+						return;
+					}
+				}
+			}
 		}
 	}
 

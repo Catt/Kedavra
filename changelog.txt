@@ -1,6 +1,12 @@
 _*_*_*_*_ FIXES AND CHANGES _*_*_*_*_
  * * * *                     * * * *
 
+[7][2012-05-23-15:30]
+    (001) Added functionality for rectangle-rectangle collisions.
+    (002) Added pseudo-functionality for rectangle-circle collisions (treats collision like rectangle-rectangle for now).
+    (003) Added CoWSAD (Like CoMovePlayer, but without mouse rotation).
+    (004) Added (most likely temporary) Entities for testing new collisions: SquarePlayer, WideCrate.
+
 [6][2012-05-22-17:15]
 	(001) Added an add/remover for Collidable in the GameplayState.  I'm considering overhauling access code for GameplayState.
 	(002) Changed Collidinator and Collidable to pass the StateBasedGame to collision methods (so you can add/remove during collisions).

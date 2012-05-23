@@ -19,6 +19,8 @@ import catt.kedavra.entities.Entity;
 import catt.kedavra.entities.Player;
 import catt.kedavra.entities.Rock;
 import catt.kedavra.entities.Spark;
+import catt.kedavra.entities.SquarePlayer;
+import catt.kedavra.entities.WideCrate;
 
 
 public class GameplayState extends BasicGameState {
@@ -27,8 +29,9 @@ public class GameplayState extends BasicGameState {
 	private int stateID = -1;
 	private Collidinator collidinator = new Collidinator();
 	private int id_ent = 0; //Used to iterate the unique id for entities.
-	private Player player;
+	private SquarePlayer player;
 	private Spark spark;
+	private WideCrate crate;
 	private ArrayList<Rock> rocks = new ArrayList<Rock>();
 	//private Rock [] rocks = new Rock [5];
 	private LinkedList<Entity> llRendered = new LinkedList<Entity>();
@@ -80,11 +83,15 @@ public class GameplayState extends BasicGameState {
 		//Load the background image
 		imgBackground = new Image("img/grass.png");
 		//c//Populate the stage.
-		player = new Player(700,500,id_ent++);
+		player = new SquarePlayer(700,500,id_ent++);
 		llRendered.add(player);
 		llUpdated.add(player);
 		collidinator.add(player);
 		spark = new Spark(700,500,id_ent++);
+		crate = new WideCrate(500,500,id_ent++);
+		llRendered.add(crate);
+		llUpdated.add(crate);
+		collidinator.add(crate);
 		llRendered.add(spark);
 		llUpdated.add(spark);
 		rocks.add(new Rock(100,100,id_ent++));

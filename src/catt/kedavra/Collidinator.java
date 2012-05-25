@@ -93,32 +93,32 @@ public class Collidinator implements Updatable {
 			float hhs = a.getCollisionRadii()[1]+b.getCollisionRadii()[1];
 			//If the entities are intersecting on the Y axis...
 			if (hhs >= Math.abs(distY)){
-				//And the Y axis...
+				//c//And the Y axis...
 				if (hws > Math.abs(distX)){
-					//Get the overlap between the two entities.
+					//c//Get the overlap between the two entities.
 					float overlapX = hws - Math.abs(distX);
 					float overlapY = hhs - Math.abs(distY);
 					
 					if(Math.abs(overlapX)<Math.abs(overlapY)){
 						if(distX < 0){
-							//Collision to the right.
+							//c//Collision to the right.
 							a.collision(sbg, b, new Vector2f(-overlapX,0));
 							b.collision(sbg, a, new Vector2f(overlapX,0));
 						}
 						else{
-							//Collision to the left.
+							//c//Collision to the left.
 							a.collision(sbg, b, new Vector2f(overlapX,0));
 							b.collision(sbg, a, new Vector2f(-overlapX,0));
 						}	
 					}
 					else{
 						if(distY < 0){
-							//Collision below.
+							//c//Collision below.
 							a.collision(sbg, b, new Vector2f(0,-overlapY));
 							b.collision(sbg, a, new Vector2f(0,overlapY));
 						}
 						else{
-							//Collision above.
+							//c//Collision above.
 							a.collision(sbg, b, new Vector2f(0,overlapY));
 							b.collision(sbg, a, new Vector2f(0,-overlapY));
 						}
@@ -130,48 +130,113 @@ public class Collidinator implements Updatable {
 		
 		//c//If the Collidables have different bounding types, do some magic.
 		float distX, distY, hws, hhs;
+		Collidable rect, circ;
 		if(a.getCollisionType() == Collidable.CT_RECTANGLE){
-			distX = a.getPosition().getX() - b.getPosition().getX();
-			distY = a.getPosition().getY() - b.getPosition().getY();
-			hws = a.getCollisionRadii()[0]+b.getCollisionRadii()[0];
-			hhs = a.getCollisionRadii()[1]+b.getCollisionRadii()[0];
+			rect = a;
+			circ = b;
 		}
 		else{
-			distX = a.getPosition().getX() - b.getPosition().getX();
-			distY = a.getPosition().getY() - b.getPosition().getY();
-			hws = a.getCollisionRadii()[0]+b.getCollisionRadii()[0];
-			hhs = a.getCollisionRadii()[0]+b.getCollisionRadii()[1];
+			rect = b;
+			circ = a;
 		}
-		//If the entities are intersecting on the Y axis...
+		distX = rect.getPosition().getX() - circ.getPosition().getX();
+		distY = rect.getPosition().getY() - circ.getPosition().getY();
+		hws = rect.getCollisionRadii()[0] + circ.getCollisionRadii()[0];
+		hhs = rect.getCollisionRadii()[1] + circ.getCollisionRadii()[0];
+		//c//If the entities are intersecting on the Y axis...
 		if (hhs >= Math.abs(distY)){
-			//And the Y axis...
+			//c//And the Y axis...
 			if (hws > Math.abs(distX)){
-				//Get the overlap between the two entities.
+				//c//Get the overlap between the two entities.
 				float overlapX = hws - Math.abs(distX);
 				float overlapY = hhs - Math.abs(distY);
-				
-				if(Math.abs(overlapX)<Math.abs(overlapY)){
-					if(distX < 0){
-						//Collision to the right.
-						a.collision(sbg, b, new Vector2f(-overlapX,0));
-						b.collision(sbg, a, new Vector2f(overlapX,0));
+				if(overlapX > circ.getCollisionRadii()[0]){
+					if(distY > 0){
+						//c//Collision above.
+						rect.collision(sbg, circ, new Vector2f(0,overlapY));
+						circ.collision(sbg, rect, new Vector2f(0,-overlapY));
 					}
 					else{
-						//Collision to the left.
-						a.collision(sbg, b, new Vector2f(overlapX,0));
-						b.collision(sbg, a, new Vector2f(-overlapX,0));
-					}	
+						//c//Collision below.
+						rect.collision(sbg, circ, new Vector2f(0,-overlapY));
+						circ.collision(sbg, rect, new Vector2f(0,overlapY));
+					}
 				}
-				else{
-					if(distY < 0){
-						//Collision below.
-						a.collision(sbg, b, new Vector2f(0,-overlapY));
-						b.collision(sbg, a, new Vector2f(0,overlapY));
+				else if (overlapY > circ.getCollisionRadii()[0]){
+					if (distX > 0){
+						//c//Collision left.
+						rect.collision(sbg, circ, new Vector2f(overlapX,0));
+						circ.collision(sbg, rect, new Vector2f(-overlapX,0));
 					}
 					else{
-						//Collision above.
-						a.collision(sbg, b, new Vector2f(0,overlapY));
-						b.collision(sbg, a, new Vector2f(0,-overlapY));
+						//c//Collision right.
+						rect.collision(sbg, circ, new Vector2f(-overlapX,0));
+						circ.collision(sbg, rect, new Vector2f(overlapX,0));
+					}
+				}
+				//c//Here is where we handle those nasty corners.
+				else{
+					//c//Top... 
+					if (distY > 0 ){
+						//c//...left region.
+						if(distX < 0){
+							Vector2f tlc = new Vector2f(rect.getPosition().x+rect.getCollisionRadii()[0],
+									                    rect.getPosition().y-rect.getCollisionRadii()[1]);
+							float distC = tlc.distance(circ.getPosition())-circ.getCollisionRadii()[0];
+							if(distC < 0){
+								//c//Collision top-left.
+								Vector2f offsetC = new Vector2f(-distC,0);
+								double theta = Math.toDegrees(Math.atan2((circ.getPosition().y-tlc.getY()),(circ.getPosition().x-tlc.getX())));
+								offsetC.setTheta(theta);
+								rect.collision(sbg, circ, offsetC);
+								circ.collision(sbg, rect, offsetC);
+							}
+						}
+						//c//...right region.
+						else{
+							Vector2f tlc = new Vector2f(rect.getPosition().x-rect.getCollisionRadii()[0],
+				                                        rect.getPosition().y-rect.getCollisionRadii()[1]);
+							float distC = tlc.distance(circ.getPosition())-circ.getCollisionRadii()[0];
+							if(distC < 0){
+								//c//Collision top-right.
+								Vector2f offsetC = new Vector2f(-distC,0);
+								double theta = Math.toDegrees(Math.atan2((circ.getPosition().y-tlc.getY()),(circ.getPosition().x-tlc.getX())));
+								offsetC.setTheta(theta);
+								rect.collision(sbg, circ, offsetC);
+								circ.collision(sbg, rect, offsetC);
+							}
+						}
+					}
+					//c//Bottom... 
+					else{
+						//c//...left region.
+						if(distX < 0){
+							Vector2f tlc = new Vector2f(rect.getPosition().x+rect.getCollisionRadii()[0],
+									                    rect.getPosition().y+rect.getCollisionRadii()[1]);
+							float distC = tlc.distance(circ.getPosition())-circ.getCollisionRadii()[0];
+							if(distC < 0){
+								//c//Collision top-left.
+								Vector2f offsetC = new Vector2f(-distC,0);
+								double theta = Math.toDegrees(Math.atan2((circ.getPosition().y-tlc.getY()),(circ.getPosition().x-tlc.getX())));
+								offsetC.setTheta(theta);
+								rect.collision(sbg, circ, offsetC);
+								circ.collision(sbg, rect, offsetC);
+							}
+						}
+						//c//...right region.
+						else{
+							Vector2f tlc = new Vector2f(rect.getPosition().x-rect.getCollisionRadii()[0],
+				                                        rect.getPosition().y+rect.getCollisionRadii()[1]);
+							float distC = tlc.distance(circ.getPosition())-circ.getCollisionRadii()[0];
+							if(distC < 0){
+								//c//Collision top-right.
+								Vector2f offsetC = new Vector2f(-distC,0);
+								double theta = Math.toDegrees(Math.atan2((circ.getPosition().y-tlc.getY()),(circ.getPosition().x-tlc.getX())));
+								offsetC.setTheta(theta);
+								rect.collision(sbg, circ, offsetC);
+								circ.collision(sbg, rect, offsetC);
+							}
+						}
 					}
 				}
 			}

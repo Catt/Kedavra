@@ -10,20 +10,20 @@ import catt.kedavra.entities.Collidable;
 import catt.kedavra.entities.Entity;
 
 /**
- * This is a rock.
+ * This is a wide crate.
  * @author Catt
  * @author Zhengman777
  *
  */
-public class WideCrate extends Entity {
+public class Crate_Wide extends Entity {
 	
 	/**
-	 * Creates a new Rock.
+	 * Creates a new Wide Crate.
 	 * @param x This Entity's x position.
 	 * @param y This Entity's y position.
 	 * @param id This Entity's unique id.
 	 */
-	public WideCrate(int x, int y, int id) {
+	public Crate_Wide(int x, int y, int id) {
 		super(x, y, id, Collidable.CT_RECTANGLE);
 		//c//Add sprite.
 		try {

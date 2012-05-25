@@ -1,6 +1,14 @@
 _*_*_*_*_ FIXES AND CHANGES _*_*_*_*_
  * * * *                     * * * *
 
+[8][2012-05-25-17:00]
+    (001) All collision types are now fully functional!
+    (002) Deleted test classes: SquarePlayer, CoWSAD.
+    (003) Moved collision code from rock to Incendio (where I should have put it all along).
+    (004) Tweaked code so that Player will not stick in anything.
+    (005) Added Crates. (Since WideCrate already existed, a regular Crate seemed reasonable.)
+    (006) Renamed: WideCrate -> Crate_Wide. This allows for easier sorting of large collections of Entities.
+    
 [7][2012-05-23-15:30]
     (001) Added functionality for rectangle-rectangle collisions.
     (002) Added pseudo-functionality for rectangle-circle collisions (treats collision like rectangle-rectangle for now).

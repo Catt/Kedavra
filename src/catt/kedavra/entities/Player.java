@@ -42,7 +42,7 @@ public class Player extends Entity {
 	
 	public void collision(StateBasedGame sbg, Collidable other, Vector2f offset) {
 		//c//Keep the player from getting stuck inside rocks.
-		if(Rock.class.isInstance(other))
+		if(!Incendio.class.isInstance(other))
 			addPosition(offset);
 	}	
 

@@ -6,6 +6,7 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
+import catt.kedavra.GameplayState;
 import catt.kedavra.components.CoMoveLinear;
 import catt.kedavra.components.CoRender;
 
@@ -43,6 +44,16 @@ public class Incendio extends Entity {
 	}
 
 	public void collision(StateBasedGame sbg, Collidable other, Vector2f offset) {
+		GameplayState gps = (GameplayState)sbg.getCurrentState();
+		if (!Player.class.isInstance(other)){
+			addPosition(offset);
+			Spark spark = new Spark((int)(getX()), (int)(getY()), gps.getID_ent());
+			gps.addRendered(spark);
+			gps.addUpdated(spark);
+			gps.removeRendered((Entity)this);
+			gps.removeUpdated((Entity)this);
+			gps.removeCollider((Entity)this);
+		}
 		
 	}
 

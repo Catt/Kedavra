@@ -7,8 +7,9 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import catt.kedavra.GameplayState;
+import catt.kedavra.components.CoAnimate;
 import catt.kedavra.components.CoMoveLinear;
-import catt.kedavra.components.CoRender;
+import catt.kedavra.components.CoTimedRemoval;
 
 /**
  * This Entity is a missile spell which sets things on fire.
@@ -30,7 +31,7 @@ public class Incendio extends Entity {
 		super(x, y, id, Collidable.CT_CIRCLE);
 		
 		try {
-			addComponent(new CoRender(0, new Image("img/incendio.png")));
+			addComponent(new CoAnimate(0, new Image("img/incendio.png"), 30, 8, 50));
 			Sound sndIncendio = new Sound("snd/incendio.wav");
 			sndIncendio.play();
 		} catch (SlickException e) {
@@ -50,9 +51,7 @@ public class Incendio extends Entity {
 			Spark spark = new Spark((int)(getX()), (int)(getY()), gps.getID_ent());
 			gps.addRendered(spark);
 			gps.addUpdated(spark);
-			gps.removeRendered((Entity)this);
-			gps.removeUpdated((Entity)this);
-			gps.removeCollider((Entity)this);
+			addComponent(new CoTimedRemoval(2,0));
 		}
 		
 	}

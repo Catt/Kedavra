@@ -5,6 +5,12 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import catt.kedavra.GameplayState;
 
+/**
+ * This component removes its Entity from llRendered, llUpdated, and collidinator after a specified amount of time.
+ * @author Zhengman777
+ * @author Catt
+ */
+
 public class CoTimedRemoval extends Component implements Updatable {
 
 	private int time = 0;

@@ -13,7 +13,7 @@ import catt.kedavra.entities.Collidable;
 import catt.kedavra.entities.Entity;
 
 /**
- * This is a rock.
+ * This is a spark.
  * @author Catt
  * @author Zhengman777
  *

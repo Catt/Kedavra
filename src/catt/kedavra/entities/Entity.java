@@ -71,6 +71,10 @@ public abstract class Entity implements Collidable{
 		return collisionType;
 	}
 	
+	public void setCollisionType(int collisionType) {
+		this.collisionType = collisionType;
+	}
+	
 	/**
 	 * Fetches the collision radii of this Entity.
 	 * @return collisionRadii

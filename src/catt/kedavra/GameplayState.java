@@ -20,6 +20,7 @@ import catt.kedavra.entities.Player;
 import catt.kedavra.entities.Rock;
 import catt.kedavra.entities.Spark;
 import catt.kedavra.entities.Crate_Wide;
+import catt.kedavra.entities.Wand;
 
 
 public class GameplayState extends BasicGameState {
@@ -29,6 +30,7 @@ public class GameplayState extends BasicGameState {
 	private Collidinator collidinator = new Collidinator();
 	private int id_ent = 0; //Used to iterate the unique id for entities.
 	private Player player;
+	private Wand playerWand;
 	private Spark spark;
 	private Crate_Wide crate;
 	private ArrayList<Rock> rocks = new ArrayList<Rock>();
@@ -83,16 +85,16 @@ public class GameplayState extends BasicGameState {
 		imgBackground = new Image("img/grass.png");
 		//c//Populate the stage.
 		player = new Player(700,500,id_ent++);
-		llRendered.add(player);
 		llUpdated.add(player);
 		collidinator.add(player);
-		spark = new Spark(700,500,id_ent++);
+		playerWand = new Wand(600,500,id_ent++,new Image("img/wand_brown.png"),player);
+		llRendered.add(playerWand);
+		llRendered.add(player); //Render the player over the wand
+		llUpdated.add(playerWand);
 		crate = new Crate_Wide(500,500,id_ent++);
 		llRendered.add(crate);
 		llUpdated.add(crate);
 		collidinator.add(crate);
-		llRendered.add(spark);
-		llUpdated.add(spark);
 		rocks.add(new Rock(100,100,id_ent++));
 		rocks.add(new Rock(250,110,id_ent++));
 		rocks.add(new Rock(90,400,id_ent++));

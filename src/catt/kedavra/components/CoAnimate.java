@@ -10,12 +10,24 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
-
+/**
+ * This component animates an Entity by taking sprites from a sprite sheet.
+ * @author Zhengman777
+ * @author Catt
+ */
 public class CoAnimate extends Component implements Renderable, Updatable{
 
 	private ArrayList<Animation> animations = new ArrayList<Animation>();
 	private Animation current;
 	
+	/**
+	 * Creates a new CoAnimate component.
+	 * @param id This component's unique.
+	 * @param spriteStrip The spritesheet.
+	 * @param tileSizeX The length of the sprite unit in the sheet.
+	 * @param tileSizeY The height of the sprite unit in the sheet.
+	 * @param duration How long each sprite is displayed for.
+	 */
 	public CoAnimate(int id, Image spriteStrip, int tileSizeX, int tileSizeY, int duration){
 		SpriteSheet ss = new SpriteSheet(spriteStrip,tileSizeX, tileSizeY);
 		Animation animation = new Animation(ss,duration);

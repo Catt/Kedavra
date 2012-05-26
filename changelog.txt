@@ -1,5 +1,14 @@
 _*_*_*_*_ FIXES AND CHANGES _*_*_*_*_
- * * * *                     * * * *
+ * * * *          
+
+[9][2012-05-25-20:00]
+	(001) Animated Incendio.
+	(002) When Incendio collides with a non-player object, it adds the CoTimedRemoval component.
+	(003) Added the Wand class.
+	(004) Added a setCollisionType method in Entity. This will be used for when the wand flies off and can collide into things.
+	(005) Removed the spawning of a Spark on the player when the game starts.
+	(006) Added the CoMoveWand class.
+	(007) Changed where CoCastPlayer spawned Incendio by creating a static variable in Wand. Incendio now spawns off of the wand tip. 
 
 [8][2012-05-25-17:00]
     (001) All collision types are now fully functional!

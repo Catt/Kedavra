@@ -2,6 +2,7 @@ package catt.kedavra.entities;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -37,13 +38,19 @@ public class Chicken extends Entity {
 	@Override
 	public void collision(StateBasedGame sbg, Collidable other, Vector2f offset) {
 		GameplayState gps = (GameplayState)sbg.getCurrentState();
+		// If the chicken is hit with the incendio spell, it explodes.
 		if(Incendio.class.isInstance(other)){
+			try{
+				Sound death = new Sound("snd/ChickenDeath.wav");
+				death.play();
+			} catch (SlickException e){
+				System.out.println("Could not load snd/ChickenDeath.wav");
+			}
 			Explosion_Small explosion = new Explosion_Small((int)this.getX(), (int)this.getY(),2);
 			gps.addUpdated(explosion);
 			gps.addRendered(explosion);
 			addComponent(new CoTimedRemoval(2,0));
 		}
-
 	}
 
 }

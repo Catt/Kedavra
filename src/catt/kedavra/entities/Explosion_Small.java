@@ -2,6 +2,7 @@ package catt.kedavra.entities;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -25,6 +26,8 @@ public class Explosion_Small extends Entity {
 		try{
 			addComponent(new CoAnimate(0,new Image("img/smallExplosion.png"), 80, 80,50));
 			addComponent(new CoTimedRemoval(1, 240));
+			Sound explosion = new Sound("snd/Explosion_Small.wav");
+			explosion.play();
 		} catch (SlickException e){
 			System.out.println("Could not load img/smallExplosion.png");
 		}

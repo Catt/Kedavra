@@ -1,5 +1,8 @@
 _*_*_*_*_ FIXES AND CHANGES _*_*_*_*_
- * * * *     
+ * * * *    
+[12][2012-05-28-16:50]
+	(001) Added sound to small explosion
+	(002) Added death cry to chicken 
 [11][2012-05-28-13:00]
 	(001) Added a small explosion entity
 	(002) Animated small explosion entity

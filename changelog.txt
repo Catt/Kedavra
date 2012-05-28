@@ -1,6 +1,10 @@
 _*_*_*_*_ FIXES AND CHANGES _*_*_*_*_
  * * * *          
-
+[10][2012-05-27-22:57]
+	(001) Added a chicken entity
+	(002) Animated chicken entity
+	(003) Created CoMoveLinearPath component - implementing entities will indefinitely follow a straight-line path.
+	(004) Chicken now uses CoMoveLinearPath
 [9][2012-05-25-20:00]
 	(001) Animated Incendio.
 	(002) When Incendio collides with a non-player object, it adds the CoTimedRemoval component.

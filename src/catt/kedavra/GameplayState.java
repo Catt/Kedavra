@@ -15,6 +15,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
+import catt.kedavra.entities.Chicken;
 import catt.kedavra.entities.Entity;
 import catt.kedavra.entities.Player;
 import catt.kedavra.entities.Rock;
@@ -34,6 +36,7 @@ public class GameplayState extends BasicGameState {
 	private Spark spark;
 	private Crate_Wide crate;
 	private ArrayList<Rock> rocks = new ArrayList<Rock>();
+	private Chicken chicken;
 	//private Rock [] rocks = new Rock [5];
 	private LinkedList<Entity> llRendered = new LinkedList<Entity>();
 	private LinkedList<Entity> llUpdated = new LinkedList<Entity>(); 
@@ -104,6 +107,10 @@ public class GameplayState extends BasicGameState {
 		llUpdated.addAll(rocks);
 		for(Rock rock : rocks)
 			collidinator.add(rock);
+		chicken = new Chicken(400,400,id_ent++,0);
+		llUpdated.add(chicken);
+		collidinator.add(chicken);
+		llRendered.add(chicken);
 		
 	}
 	

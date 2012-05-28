@@ -1,5 +1,10 @@
 _*_*_*_*_ FIXES AND CHANGES _*_*_*_*_
  * * * *    
+[13][2012-05-28-18:41]
+	(001) Added removeComponent method to the Entity class. This allows for change in entity behavior in the middle of runtime.
+	(002) Added additional collision functionality to chicken. No longer will it walk over everything it encounters.
+	(003) Edited CoMoveLinearPath's constructor to include parameters representing the start location on path as well as beginning direction.
+		  This allows for additional flexibility, which was necessary to implement (002).
 [12][2012-05-28-16:50]
 	(001) Added sound to small explosion
 	(002) Added death cry to chicken 

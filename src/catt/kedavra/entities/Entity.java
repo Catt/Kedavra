@@ -13,10 +13,10 @@ import catt.kedavra.components.Updatable;
 /**
  * Entities are the backbone of this game.  Any witch, wizard, creature, wand, spell, top hat, or bad pun which intends to make a 
  * physical manifestation in (or impression upon) the game-world must extend this class.  At its heart, an Entity consists of a
- * unique (yet mostly worthless) id, a position vector, and a list of components.  Components are added via addComponent(), can be
- * either renderers or updaters, and provide Entities with most all of their functionality.
+ * unique (yet mostly worthless) id, a position vector, and a list of components.  Components are added via addComponent(), removed 
+ * via removeComponent(), can be either renderers or updaters, and provide Entities with most all of their functionality.
  * @author Catt
- *
+ * @author AbsentMoniker
  */
 public abstract class Entity implements Collidable{
 	
@@ -96,6 +96,16 @@ public abstract class Entity implements Collidable{
 		}
 		if(Updatable.class.isInstance(component)){
 			updaters.add((Updatable)component);
+		}
+	}
+	
+	public void removeComponent(Component component){
+		components.remove(component);
+		if(Renderable.class.isInstance(component)){
+			renderers.remove((Renderable)component);
+		}
+		if(Updatable.class.isInstance(component)){
+			updaters.remove((Updatable)component);
 		}
 	}
 	

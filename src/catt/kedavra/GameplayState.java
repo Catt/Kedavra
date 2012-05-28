@@ -103,13 +103,13 @@ public class GameplayState extends BasicGameState {
 		rocks.add(new Rock(100,100,id_ent++));
 		rocks.add(new Rock(250,110,id_ent++));
 		rocks.add(new Rock(90,400,id_ent++));
-		rocks.add(new Rock(300,330,id_ent++));
-		rocks.add(new Rock(600,25,id_ent++));
+		rocks.add(new Rock(400,330,id_ent++));
+		rocks.add(new Rock(650,330,id_ent++));
 		llRendered.addAll(rocks);
 		llUpdated.addAll(rocks);
 		for(Rock rock : rocks)
 			collidinator.add(rock);
-		chicken = new Chicken(400,400,id_ent++,0);
+		chicken = new Chicken(550,400,id_ent++,0);
 		llUpdated.add(chicken);
 		collidinator.add(chicken);
 		llRendered.add(chicken);

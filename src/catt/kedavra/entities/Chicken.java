@@ -17,6 +17,9 @@ import catt.kedavra.components.CoTimedRemoval;
  *
  */
 public class Chicken extends Entity {
+	//The path the Chicken will be following
+	private CoMoveLinearPath path;
+	
 	/**
 	 * Creates a new Chicken.
 	 * @param x This Entity's x position.
@@ -31,7 +34,8 @@ public class Chicken extends Entity {
 			System.out.println("Could not load img/chicken.png");
 		}
 		this.rotation = rotation;
-		addComponent(new CoMoveLinearPath(1, .1f, rotation, 250));
+		path = new CoMoveLinearPath(1, .1f, rotation, 250, 150, false);
+		addComponent(path);
 		collisionRadii[0] = 10;
 	}
 	
@@ -50,6 +54,13 @@ public class Chicken extends Entity {
 			gps.addUpdated(explosion);
 			gps.addRendered(explosion);
 			addComponent(new CoTimedRemoval(2,0));
+		}
+		// If the chicken runs into anything else, it will go the opposite direction, but follow the same path.
+		// NOTE- path tends to get off very slightly. This is believed to be due to rounding error.
+		else{
+			removeComponent(path);
+			path = new CoMoveLinearPath(1, .1f, rotation, 250, path.getDistance(), !path.getDirection());
+			addComponent(path);
 		}
 	}
 

@@ -1,5 +1,9 @@
 _*_*_*_*_ FIXES AND CHANGES _*_*_*_*_
- * * * *          
+ * * * *     
+[11][2012-05-28-13:00]
+	(001) Added a small explosion entity
+	(002) Animated small explosion entity
+	(003) Implemented small explosion with chicken - when struck by incendio, chicken explodes 
 [10][2012-05-27-22:57]
 	(001) Added a chicken entity
 	(002) Animated chicken entity

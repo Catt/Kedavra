@@ -5,8 +5,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
+import catt.kedavra.GameplayState;
 import catt.kedavra.components.CoAnimate;
 import catt.kedavra.components.CoMoveLinearPath;
+import catt.kedavra.components.CoTimedRemoval;
 
 /**
  * This entity represents a chicken best used for target practice.
@@ -34,7 +36,13 @@ public class Chicken extends Entity {
 	
 	@Override
 	public void collision(StateBasedGame sbg, Collidable other, Vector2f offset) {
-		// TODO Auto-generated method stub
+		GameplayState gps = (GameplayState)sbg.getCurrentState();
+		if(Incendio.class.isInstance(other)){
+			Explosion_Small explosion = new Explosion_Small((int)this.getX(), (int)this.getY(),2);
+			gps.addUpdated(explosion);
+			gps.addRendered(explosion);
+			addComponent(new CoTimedRemoval(2,0));
+		}
 
 	}
 

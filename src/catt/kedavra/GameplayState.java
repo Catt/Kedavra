@@ -18,6 +18,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import catt.kedavra.entities.Chicken;
 import catt.kedavra.entities.Entity;
+import catt.kedavra.entities.Explosion_Small;
 import catt.kedavra.entities.Player;
 import catt.kedavra.entities.Rock;
 import catt.kedavra.entities.Spark;
@@ -37,6 +38,7 @@ public class GameplayState extends BasicGameState {
 	private Crate_Wide crate;
 	private ArrayList<Rock> rocks = new ArrayList<Rock>();
 	private Chicken chicken;
+	private Explosion_Small explosion;
 	//private Rock [] rocks = new Rock [5];
 	private LinkedList<Entity> llRendered = new LinkedList<Entity>();
 	private LinkedList<Entity> llUpdated = new LinkedList<Entity>(); 

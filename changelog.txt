@@ -1,5 +1,10 @@
 _*_*_*_*_ FIXES AND CHANGES _*_*_*_*_
- * * * *    
+ * * * *   
+[14][2012-05-29-15:32]
+	(001) Created new package for Spells. 
+	(002) Created abstract class Spell that all spells will extend.
+	(003) Created interface SpellAttack to be implemented  by all spells meant to attack people.
+	(004) Changed Incendio to utilize the new system developed. 
 [13][2012-05-28-18:41]
 	(001) Added removeComponent method to the Entity class. This allows for change in entity behavior in the middle of runtime.
 	(002) Added additional collision functionality to chicken. No longer will it walk over everything it encounters.

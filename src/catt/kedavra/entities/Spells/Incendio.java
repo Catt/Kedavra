@@ -1,4 +1,4 @@
-package catt.kedavra.entities;
+package catt.kedavra.entities.Spells;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -10,6 +10,9 @@ import catt.kedavra.GameplayState;
 import catt.kedavra.components.CoAnimate;
 import catt.kedavra.components.CoMoveLinear;
 import catt.kedavra.components.CoTimedRemoval;
+import catt.kedavra.entities.Collidable;
+import catt.kedavra.entities.Player;
+import catt.kedavra.entities.Spark;
 
 /**
  * This Entity is a missile spell which sets things on fire.
@@ -17,8 +20,11 @@ import catt.kedavra.components.CoTimedRemoval;
  * @author Catt
  */
 
-public class Incendio extends Entity {
-	
+public class Incendio extends Spell implements SpellAttack {
+	/**
+	 *THe primary attack purpose of the spell is to do damage. 
+	 */
+	private int attackType = SpellAttack.DAMAGE;
 	
 	/**
 	 * Creates a new Incendio.
@@ -29,6 +35,7 @@ public class Incendio extends Entity {
 	 */
 	public Incendio(int x, int y, int id, float rotation) {
 		super(x, y, id, Collidable.CT_CIRCLE);
+		power = 2;
 		
 		try {
 			addComponent(new CoAnimate(0, new Image("img/incendio.png"), 30, 8, 50));
@@ -54,6 +61,11 @@ public class Incendio extends Entity {
 			addComponent(new CoTimedRemoval(2,0));
 		}
 		
+	}
+
+	@Override
+	public int getAttackType() {
+		return attackType;
 	}
 
 }

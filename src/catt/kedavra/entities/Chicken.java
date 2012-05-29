@@ -10,6 +10,8 @@ import catt.kedavra.GameplayState;
 import catt.kedavra.components.CoAnimate;
 import catt.kedavra.components.CoMoveLinearPath;
 import catt.kedavra.components.CoTimedRemoval;
+import catt.kedavra.entities.Spells.Incendio;
+import catt.kedavra.entities.Spells.SpellAttack;
 
 /**
  * This entity represents a chicken best used for target practice.
@@ -43,7 +45,7 @@ public class Chicken extends Entity {
 	public void collision(StateBasedGame sbg, Collidable other, Vector2f offset) {
 		GameplayState gps = (GameplayState)sbg.getCurrentState();
 		// If the chicken is hit with the incendio spell, it explodes.
-		if(Incendio.class.isInstance(other)){
+		if(SpellAttack.class.isInstance(other)){
 			try{
 				Sound death = new Sound("snd/ChickenDeath.wav");
 				death.play();

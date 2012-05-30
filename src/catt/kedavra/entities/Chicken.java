@@ -8,19 +8,17 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import catt.kedavra.GameplayState;
 import catt.kedavra.components.CoAnimate;
-import catt.kedavra.components.CoMoveLinearPath;
+import catt.kedavra.components.CoMove_Saunter;
 import catt.kedavra.components.CoTimedRemoval;
-import catt.kedavra.entities.Spells.Incendio;
 import catt.kedavra.entities.Spells.SpellAttack;
 
 /**
  * This entity represents a chicken best used for target practice.
  * @author AbsentMoniker
+ * @author Catt
  *
  */
 public class Chicken extends Entity {
-	//The path the Chicken will be following
-	private CoMoveLinearPath path;
 	
 	/**
 	 * Creates a new Chicken.
@@ -28,17 +26,15 @@ public class Chicken extends Entity {
 	 * @param y This Entity's y position.
 	 * @param id This Entity's unique id.
 	 */
-	public Chicken(int x, int y, int id, float rotation){
+	public Chicken(int x, int y, int id){
 		super(x,y,id, Collidable.CT_CIRCLE);
 		try{
-			addComponent(new CoAnimate(0, new Image("img/chicken.png"), 40,40, 200));
+			addComponent(new CoAnimate(0, new Image("img/chicken_top.png"), 50, 40, 200));
 		} catch (SlickException e){
 			System.out.println("Could not load img/chicken.png");
 		}
-		this.rotation = rotation;
-		path = new CoMoveLinearPath(1, .1f, rotation, 250, 150, false);
-		addComponent(path);
-		collisionRadii[0] = 10;
+		addComponent(new CoMove_Saunter(id, 1.f, 0.1f));
+		collisionRadii[0] = 20;
 	}
 	
 	@Override
@@ -57,12 +53,8 @@ public class Chicken extends Entity {
 			gps.addRendered(explosion);
 			addComponent(new CoTimedRemoval(2,0));
 		}
-		// If the chicken runs into anything else, it will go the opposite direction, but follow the same path.
-		// NOTE- path tends to get off very slightly. This is believed to be due to rounding error.
 		else{
-			removeComponent(path);
-			path = new CoMoveLinearPath(1, .1f, rotation, 250, path.getDistance(), !path.getDirection());
-			addComponent(path);
+			//c//Path finding AI goes here...
 		}
 	}
 

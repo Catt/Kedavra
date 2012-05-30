@@ -16,12 +16,11 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import catt.kedavra.components.Chickenator;
 import catt.kedavra.entities.Chicken;
 import catt.kedavra.entities.Entity;
-import catt.kedavra.entities.Explosion_Small;
 import catt.kedavra.entities.Player;
 import catt.kedavra.entities.Rock;
-import catt.kedavra.entities.Spark;
 import catt.kedavra.entities.Crate_Wide;
 import catt.kedavra.entities.Wand;
 
@@ -31,14 +30,13 @@ public class GameplayState extends BasicGameState {
 	private Image imgBackground;
 	private int stateID = -1;
 	private Collidinator collidinator = new Collidinator();
+	private Chickenator chickenator = new Chickenator();
 	private int id_ent = 0; //Used to iterate the unique id for entities.
 	private Player player;
 	private Wand playerWand;
-	private Spark spark;
 	private Crate_Wide crate;
 	private ArrayList<Rock> rocks = new ArrayList<Rock>();
 	private Chicken chicken;
-	private Explosion_Small explosion;
 	//private Rock [] rocks = new Rock [5];
 	private LinkedList<Entity> llRendered = new LinkedList<Entity>();
 	private LinkedList<Entity> llUpdated = new LinkedList<Entity>(); 
@@ -59,6 +57,10 @@ public class GameplayState extends BasicGameState {
 	
 	public int getID_ent(){
 		return id_ent;
+	}
+	
+	public void setID_ent(int id){
+		id_ent = id;
 	}
 	
 	public void addRendered(Entity e) {
@@ -109,7 +111,7 @@ public class GameplayState extends BasicGameState {
 		llUpdated.addAll(rocks);
 		for(Rock rock : rocks)
 			collidinator.add(rock);
-		chicken = new Chicken(550,400,id_ent++,0);
+		chicken = new Chicken(550,400,id_ent++);
 		llUpdated.add(chicken);
 		collidinator.add(chicken);
 		llRendered.add(chicken);
@@ -136,6 +138,7 @@ public class GameplayState extends BasicGameState {
 		for(Entity e: llUpdated)
 			e.update(gc, sbg, delta);
 		collidinator.update(gc, sbg, delta);
+		chickenator.update(gc, sbg, delta);
 	}
 
 	//-----CUSTOM METHODS BELOW-------//	

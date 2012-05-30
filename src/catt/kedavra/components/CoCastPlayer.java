@@ -5,7 +5,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 import catt.kedavra.GameplayState;
 import catt.kedavra.entities.Wand;
-import catt.kedavra.entities.Spells.Incendio;
+import catt.kedavra.entities.spells.Incendio;
 
 /**
  * The CoCastPlayer component can be added to an Entity to allow it to create spells through manual input.

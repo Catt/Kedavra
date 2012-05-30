@@ -8,7 +8,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import catt.kedavra.components.CoCastPlayer;
 import catt.kedavra.components.CoMovePlayer;
 import catt.kedavra.components.CoRender;
-import catt.kedavra.entities.Spells.Incendio;
+import catt.kedavra.entities.spells.Incendio;
 
 /**
  * This Entity represents the user's player character.

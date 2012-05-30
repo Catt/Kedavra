@@ -1,4 +1,4 @@
-package catt.kedavra.entities.Spells;
+package catt.kedavra.entities.spells;
 
 import catt.kedavra.entities.Entity;
 

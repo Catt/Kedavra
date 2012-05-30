@@ -10,7 +10,7 @@ import catt.kedavra.GameplayState;
 import catt.kedavra.components.CoAnimate;
 import catt.kedavra.components.CoMove_Saunter;
 import catt.kedavra.components.CoTimedRemoval;
-import catt.kedavra.entities.Spells.SpellAttack;
+import catt.kedavra.entities.spells.SpellAttack;
 
 /**
  * This entity represents a chicken best used for target practice.
@@ -33,7 +33,7 @@ public class Chicken extends Entity {
 		} catch (SlickException e){
 			System.out.println("Could not load img/chicken.png");
 		}
-		addComponent(new CoMove_Saunter(id, 1.f, 0.1f));
+		addComponent(new CoMove_Saunter(id, 0.2f, 0.05f));
 		collisionRadii[0] = 20;
 	}
 	

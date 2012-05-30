@@ -1,4 +1,4 @@
-package catt.kedavra.entities.Spells;
+package catt.kedavra.entities.spells;
 
 /**
  * This class defines an interface that will be implemented for all spells that are used to attack.

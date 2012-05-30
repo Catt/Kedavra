@@ -22,6 +22,8 @@ public class CoMove_Saunter extends Component implements Updatable {
 	private float maxSpeed;
 	/** The owner's max rate of acceleration. */
 	//private float maxAccel;
+	/** The owner's attention span. */
+	private int attention;
 	
 	/**
 	 * Initialize a new CoMovement_Saunter Component, given movement specifications.
@@ -36,21 +38,29 @@ public class CoMove_Saunter extends Component implements Updatable {
 		this.id = id;
 		this.maxSpeed = maxSpeed;
 		//this.maxAccel = maxAccel;
+		attention = 0;
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
-		//c//Pick a random direction!
-		rotation = (float)(Math.random()*360.f);
-		//c//Pick a random speed!
-		float p = (float)Math.random();
-		speedX = (p)*(maxSpeed)*(float)Math.cos(rotation);
-		speedY = (p)*(maxSpeed)*(float)Math.sin(rotation);
-		
+		//c//If attention has run out...
+		if(attention <= 0){
+			//c//Pick a random direction!
+			rotation = (float)(Math.random()*360.f);
+			//c//Pick a random speed!
+			float p = (float)Math.random();
+			speedX = (p)*(maxSpeed)*(float)Math.cos(Math.toRadians(rotation));
+			speedY = (p)*(maxSpeed)*(float)Math.sin(Math.toRadians(rotation));
+			//c//Set rotation.
+			owner.setRotation(rotation);
+			//c//Start again.
+			attention = (int)(Math.random()*5000);
+		}
+		else{
+			attention -= delta;
+		}
 		//c//Set position.
 		owner.addX(speedX*delta);
 		owner.addY(speedY*delta);
-		//c//Set rotation.
-		owner.setRotation(rotation);
 	}
 
 }

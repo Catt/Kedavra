@@ -1,4 +1,4 @@
-package catt.kedavra.entities.Spells;
+package catt.kedavra.entities.spells;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;

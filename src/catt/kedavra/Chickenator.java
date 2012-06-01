@@ -1,9 +1,9 @@
-package catt.kedavra.components;
+package catt.kedavra;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
-import catt.kedavra.GameplayState;
+import catt.kedavra.components.Updatable;
 import catt.kedavra.entities.Chicken;
 
 /**
@@ -44,20 +44,18 @@ public class Chickenator implements Updatable {
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
 		//c//Calibrate.
 		if(this.x == -1){
-			this.x = (int)(Math.random()*gc.getWidth());
-			this.y = (int)(Math.random()*gc.getHeight());
+			this.x = (int)(Math.random()*5000);
+			this.y = (int)(Math.random()*5000);
 		}
 		//c//Tick.
 		ticker += delta;
 		//c//Make chickens.
 		if(ticker >= frequency){
 			GameplayState gps = (GameplayState)sbg.getCurrentState();
-			int id = gps.getID_ent();
-			Chicken chick = new Chicken(x, y, id++);
+			Chicken chick = new Chicken(gps, gps.nextID_ent(), x, y);
 			gps.addCollider(chick);
 			gps.addRendered(chick);
 			gps.addUpdated(chick);
-			gps.setID_ent(id);
 			
 			ticker = 0;
 		}

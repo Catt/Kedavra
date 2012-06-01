@@ -10,6 +10,8 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
+import catt.kedavra.GameplayState;
+
 /**
  * This component animates an Entity by taking sprites from a sprite sheet.
  * @author Zhengman777
@@ -51,7 +53,9 @@ public class CoAnimate extends Component implements Renderable, Updatable{
 		Vector2f pos = owner.getPosition();
 		Image frame = current.getCurrentFrame();
 		frame.setRotation(owner.getRotation());
-		frame.draw(pos.x-frame.getWidth()/2,pos.y-frame.getHeight()/2);
+		float camX = ((GameplayState)sbg.getCurrentState()).getCamX();
+		float camY = ((GameplayState)sbg.getCurrentState()).getCamY();
+		frame.draw(pos.x-frame.getWidth()/2-camX,pos.y-frame.getHeight()/2-camY);
 	}
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta){

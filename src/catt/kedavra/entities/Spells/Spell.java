@@ -1,5 +1,7 @@
 package catt.kedavra.entities.spells;
 
+
+import catt.kedavra.GameplayState;
 import catt.kedavra.entities.Entity;
 
 /**
@@ -14,8 +16,8 @@ public abstract class Spell extends Entity{
 	//Every spell will have a "Power level"; what this specifically defines depends on the spell category
 	protected int power;
 	
-	public Spell(int x, int y, int id, int collisionType){
-		super(x,y,id,collisionType);
+	public Spell(GameplayState gameState, int id, int x, int y, int collisionType, float rotation){
+		super(gameState, id, x, y, collisionType);
 	}
 	
 	public int getPower(){

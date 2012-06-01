@@ -1,11 +1,9 @@
 package catt.kedavra.entities;
 
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
+import catt.kedavra.GameplayState;
 import catt.kedavra.components.CoAnimate;
 import catt.kedavra.components.CoTimedRemoval;
 
@@ -21,16 +19,11 @@ public class Explosion_Small extends Entity {
 	 * @param y the y position
 	 * @param id the unique id
 	 */
-	public Explosion_Small(int x, int y, int id){
-		super(x,y,id, Collidable.CT_NONE);
-		try{
-			addComponent(new CoAnimate(0,new Image("img/smallExplosion.png"), 80, 80,50));
-			addComponent(new CoTimedRemoval(1, 240));
-			Sound explosion = new Sound("snd/Explosion_Small.wav");
-			explosion.play();
-		} catch (SlickException e){
-			System.out.println("Could not load img/smallExplosion.png");
-		}
+	public Explosion_Small(GameplayState gameState, int id, int x, int y){
+		super(gameState, id, x, y, Collidable.CT_NONE);
+		addComponent(new CoAnimate(0, game.data.getImage("explosion_small"), 80, 80,50));
+		addComponent(new CoTimedRemoval(1, 240));
+		game.data.playSound("explosion_small",(getX()-game.getCamX()-400)/20,(getY()-game.getCamY()-300)/20);
 	}
 	@Override
 	public void collision(StateBasedGame sbg, Collidable other, Vector2f offset) {

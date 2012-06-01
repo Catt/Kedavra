@@ -3,6 +3,8 @@ package catt.kedavra.entities;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
+
+import catt.kedavra.GameplayState;
 import catt.kedavra.components.CoMoveWand;
 import catt.kedavra.components.CoRender;
 
@@ -24,8 +26,8 @@ public class Wand extends Entity {
 	 * @param collisionType The entity's collision type.
 	 * @param sprite An example of a wand attribute - in this case, the sprite.
 	 */
-	public Wand(int x, int y, int id, Image sprite, Entity caster) {
-		super(x, y, id, Collidable.CT_NONE);
+	public Wand(GameplayState gameState, int id, int x, int y, Image sprite, Entity caster) {
+		super(gameState, id, x, y, Collidable.CT_NONE);
 		addComponent(new CoRender(0, sprite));
 		addComponent(new CoMoveWand(1, caster));
 	}

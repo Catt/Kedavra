@@ -1,10 +1,9 @@
 package catt.kedavra.entities;
 
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
+import catt.kedavra.GameplayState;
 import catt.kedavra.components.CoRender;
 import catt.kedavra.entities.Collidable;
 import catt.kedavra.entities.Entity;
@@ -23,14 +22,10 @@ public class Rock extends Entity {
 	 * @param y This Entity's y position.
 	 * @param id This Entity's unique id.
 	 */
-	public Rock(int x, int y, int id) {
-		super(x, y, id, Collidable.CT_CIRCLE);
+	public Rock(GameplayState gameState, int id, int x, int y) {
+		super(gameState, id, x, y, Collidable.CT_CIRCLE);
 		//c//Add sprite.
-		try {
-			addComponent(new CoRender(0, new Image("img/rock.png")));
-		} catch (SlickException e) {
-			System.out.println("Could not load img/rock.png");
-		}
+		addComponent(new CoRender(0, game.data.getImage("rock")));
 		//Set the bounding circle's size.
 		collisionRadii[0] = 32;
 		

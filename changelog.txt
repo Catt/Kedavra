@@ -1,27 +1,47 @@
 _*_*_*_*_ FIXES AND CHANGES _*_*_*_*_
  * * * *   
+
+[15][2012-05-31-20:30][c]
+    (001) Modified Entity constructor: (GameplayState game, int id, int x, int y, int collisionType).
+          GameplayState is now passed in for ease of use. use field <game> to access. Note: id now comes before x and y.
+    (002) Added Data class.  Load all images/sounds/maps in initialization().  Access through GameplayState. i.e. game.data.playSound("sound");
+    (003) Added camera functionality. Access camera position through GameplayState, i.e. game.getCamX();
+    (004) Added TiledMap grass.  Using TiledMaps increases game performance dramatically.  We may want to use power-of-two sprites for further optimization.
+    (005) Implemented 2D sound.  See Chicken or Explosion_Small for use.
+    (006) Changed a few file names and lines of code for standardization.
+    (007) Entities are now added to and removed from the main lists using spawn() and kill() respectively.  
+    (008) Replaced a few CoTimedRemoval Components in favor of fix (007).
+    (009) Created game.nextID_ent() for use with new entities.  It will automatically increment the entity ID and can thus be used as a parameter.
+          (We were all guilty of using getID_ent() without incrementing it and sending it back with setID_ent().  This will make things simpler.)
+    (010) Probably made other changes that I'm forgetting... Almost all of the code was modified in some way.
+
 [14][2012-05-29-15:32]
 	(001) Created new package for Spells. 
 	(002) Created abstract class Spell that all spells will extend.
 	(003) Created interface SpellAttack to be implemented  by all spells meant to attack people.
 	(004) Changed Incendio to utilize the new system developed. 
+
 [13][2012-05-28-18:41]
 	(001) Added removeComponent method to the Entity class. This allows for change in entity behavior in the middle of runtime.
 	(002) Added additional collision functionality to chicken. No longer will it walk over everything it encounters.
 	(003) Edited CoMoveLinearPath's constructor to include parameters representing the start location on path as well as beginning direction.
 		  This allows for additional flexibility, which was necessary to implement (002).
+
 [12][2012-05-28-16:50]
 	(001) Added sound to small explosion
 	(002) Added death cry to chicken 
+
 [11][2012-05-28-13:00]
 	(001) Added a small explosion entity
 	(002) Animated small explosion entity
 	(003) Implemented small explosion with chicken - when struck by incendio, chicken explodes 
+
 [10][2012-05-27-22:57]
 	(001) Added a chicken entity
 	(002) Animated chicken entity
 	(003) Created CoMoveLinearPath component - implementing entities will indefinitely follow a straight-line path.
 	(004) Chicken now uses CoMoveLinearPath
+
 [9][2012-05-25-20:00]
 	(001) Animated Incendio.
 	(002) When Incendio collides with a non-player object, it adds the CoTimedRemoval component.

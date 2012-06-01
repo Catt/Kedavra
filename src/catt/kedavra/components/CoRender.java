@@ -5,6 +5,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
+import catt.kedavra.GameplayState;
+
 /**
  * The CoRender component provides basic rendering of an Entity by drawing the specified image at the Entity's position.
  * @author Zhengman777
@@ -29,7 +31,9 @@ public class CoRender extends Component implements Renderable {
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
 		image.setRotation(owner.getRotation());
-		image.draw(owner.getPosition().x - image.getWidth()/2, owner.getPosition().y - image.getHeight()/2);
+		float camX = ((GameplayState)sbg.getCurrentState()).getCamX();
+		float camY = ((GameplayState)sbg.getCurrentState()).getCamY();
+		image.draw(owner.getPosition().x - image.getWidth()/2 -camX, owner.getPosition().y - image.getHeight()/2 - camY);
 	}
 
 }

@@ -6,6 +6,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
+import catt.kedavra.GameplayState;
 import catt.kedavra.components.Component;
 import catt.kedavra.components.Renderable;
 import catt.kedavra.components.Updatable;
@@ -18,13 +19,14 @@ import catt.kedavra.components.Updatable;
  * @author Catt
  * @author AbsentMoniker
  */
-public abstract class Entity implements Collidable{
+public abstract class Entity implements Renderable, Updatable, Collidable{
 	
 	/** The unique id for this entity. */
 	protected int id;
+	/** This allows the entity to access the game state for rendering and updating purposes. */
+	protected GameplayState game;
 	/** This entity's position, given in the Vector2f format (specific to the Slick2D library). */
 	protected Vector2f position = new Vector2f(0,0);
-	
 	/** A list of all components added to this Entity. It's rarely used, as components are usually accessed as updaters or renderers. */
 	protected ArrayList<Component> components = new ArrayList<Component>();
 	/** A list of all added components which have implemented the Updatable interface. */
@@ -43,10 +45,11 @@ public abstract class Entity implements Collidable{
 	 * @param id This Entity's unique id.
 	 * @param collisionType This entity's collision type.  (See Collidable for collision type constants.)
 	 */
-	public Entity(int x, int y, int id, int collisionType)
+	public Entity(GameplayState gameplayState, int id, int x, int y, int collisionType)
 	{
-		setX(x);setY(y);
+		game = gameplayState;
 		this.id = id;
+		setX(x);setY(y);
 		this.collisionType = collisionType;
 		if (collisionType == Collidable.CT_CIRCLE)
 			collisionRadii = new int[1];
@@ -207,6 +210,31 @@ public abstract class Entity implements Collidable{
 	 */
 	public void addY(float addend){
 		this.position.set(position.getX(),position.getY() + addend);
+	}
+	
+	/**
+	 * Fetches the GameplayState.  This is mainly used by components.
+	 * return The GameplayState.
+	 */
+	public GameplayState getGame(){
+		return game;
+	}
+	/**
+	 * Adds this Entity to all applicable gameplay lists, allowing it to interface with the game.
+	 */
+	public void spawn(){
+		game.addRendered(this);
+		game.addUpdated(this);
+		game.addCollider(this);
+	}
+	
+	/**
+	 * Removes this Entity from all the gameplay lists, leaving it to be garbage collected.
+	 */
+	public void kill(){
+		game.removeRendered(this);
+		game.removeUpdated(this);
+		game.removeCollider(this);
 	}
 	
 	/**

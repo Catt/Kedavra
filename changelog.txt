@@ -1,6 +1,12 @@
 _*_*_*_*_ FIXES AND CHANGES _*_*_*_*_
  * * * *   
 
+[16][2012-06-01-14:52]
+	(001) Began implementation of health system by creating CoHealth component and Damageable interface for entities.
+	(002) Created EntityDamageable so we don't have to implement the same basic health functions a million times.
+	(003) Changed SpellAttack to SpellDamage. Attack was too vague.
+	(004) Chicken now extends EntityDamageable, and thus has health. This health is not yet used, however.
+	(005) Added to-do list and glitch list. This will help us keep track of things we need to work on.
 [15][2012-05-31-20:30][c]
     (001) Modified Entity constructor: (GameplayState game, int id, int x, int y, int collisionType).
           GameplayState is now passed in for ease of use. use field <game> to access. Note: id now comes before x and y.

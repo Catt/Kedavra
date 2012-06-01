@@ -7,6 +7,7 @@ import catt.kedavra.GameplayState;
 import catt.kedavra.components.CoAnimate;
 import catt.kedavra.components.CoMoveLinear;
 import catt.kedavra.entities.Collidable;
+import catt.kedavra.entities.Entity;
 import catt.kedavra.entities.Player;
 import catt.kedavra.entities.Spark;
 
@@ -16,11 +17,7 @@ import catt.kedavra.entities.Spark;
  * @author Catt
  */
 
-public class Incendio extends Spell implements SpellAttack {
-	/**
-	 *THe primary attack purpose of the spell is to do damage. 
-	 */
-	private int attackType = SpellAttack.DAMAGE;
+public class Incendio extends Spell implements SpellDamage {
 	
 	/**
 	 * Creates a new Incendio.
@@ -51,8 +48,7 @@ public class Incendio extends Spell implements SpellAttack {
 	}
 
 	@Override
-	public int getAttackType() {
-		return attackType;
+	public void damage(Entity recipient) {
+		//IMPLEMENTATION NEEDED
 	}
-
 }

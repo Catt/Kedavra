@@ -8,7 +8,7 @@ import catt.kedavra.GameplayState;
 import catt.kedavra.components.CoAnimate;
 import catt.kedavra.components.CoCull;
 import catt.kedavra.components.CoMove_Saunter;
-import catt.kedavra.entities.spells.SpellAttack;
+import catt.kedavra.entities.spells.SpellDamage;
 
 /**
  * This entity represents a chicken best used for target practice.
@@ -16,8 +16,8 @@ import catt.kedavra.entities.spells.SpellAttack;
  * @author Catt
  *
  */
-public class Chicken extends Entity {
-	
+public class Chicken extends EntityDamageable {
+	private static final int HEALTH = 1;
 	/**
 	 * Creates a new Chicken.
 	 * @param x This Entity's x position.
@@ -25,7 +25,7 @@ public class Chicken extends Entity {
 	 * @param id This Entity's unique id.
 	 */
 	public Chicken(GameplayState gameState, int id, int x, int y){
-		super(gameState, id, x, y, Collidable.CT_CIRCLE);
+		super(gameState, id, x, y, Collidable.CT_CIRCLE, HEALTH);
 		addComponent(new CoAnimate(0, gameState.data.getImage("chicken_top"), 50, 40, 200));
 		addComponent(new CoMove_Saunter(1, 0.2f, 0.05f));
 		addComponent(new CoCull(2,Input.KEY_DELETE));
@@ -35,7 +35,7 @@ public class Chicken extends Entity {
 	@Override
 	public void collision(StateBasedGame sbg, Collidable other, Vector2f offset) {
 		// If the chicken is hit with the incendio spell, it explodes.
-		if(SpellAttack.class.isInstance(other)){
+		if(SpellDamage.class.isInstance(other)){
 			this.kill();
 		}
 		else{

@@ -16,7 +16,7 @@ public abstract class Spell extends Entity{
 	//Every spell will have a "Power level"; what this specifically defines depends on the spell category
 	protected int power;
 	
-	public Spell(GameplayState gameState, int id, int x, int y, int collisionType, float rotation){
+	public Spell(GameplayState gameState, int id, int x, int y, int collisionType){
 		super(gameState, id, x, y, collisionType);
 	}
 	

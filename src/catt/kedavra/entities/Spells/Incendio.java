@@ -8,6 +8,7 @@ import catt.kedavra.components.CoAnimate;
 import catt.kedavra.components.CoMoveLinear;
 import catt.kedavra.entities.Collidable;
 import catt.kedavra.entities.Entity;
+import catt.kedavra.entities.EntityDamageable;
 import catt.kedavra.entities.Player;
 import catt.kedavra.entities.Spark;
 
@@ -17,8 +18,8 @@ import catt.kedavra.entities.Spark;
  * @author Catt
  */
 
-public class Incendio extends Spell implements SpellDamage {
-	
+public class Incendio extends Spell implements SpellDamage, SpellFire {
+	private static final int POWER = 2;
 	/**
 	 * Creates a new Incendio.
 	 * @param x This Entity's x position.
@@ -27,8 +28,8 @@ public class Incendio extends Spell implements SpellDamage {
 	 * @param rotation This Entity's orientation (in degrees).
 	 */
 	public Incendio(GameplayState gameState, int id, int x, int y, float rotation) {
-		super(gameState, id, x, y, Collidable.CT_CIRCLE, rotation);
-		power = 2;
+		super(gameState, id, x, y, Collidable.CT_CIRCLE);
+		this.power = POWER;
 		addComponent(new CoAnimate(0, game.data.getImage("aniIncendio"), 30, 8, 50));
 		game.data.playSound("incendio");
 		this.rotation = rotation;
@@ -48,7 +49,13 @@ public class Incendio extends Spell implements SpellDamage {
 	}
 
 	@Override
-	public void damage(Entity recipient) {
-		//IMPLEMENTATION NEEDED
+	public void damage(EntityDamageable recipient) {
+		recipient.damage(power);
+	}
+
+	@Override
+	public void burn(Entity recipient) {
+		// Implementation needed
+		
 	}
 }

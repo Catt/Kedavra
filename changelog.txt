@@ -1,6 +1,12 @@
 _*_*_*_*_ FIXES AND CHANGES _*_*_*_*_
  * * * *   
-
+[17][2012-06-01-17:18]
+	(001) In EntityDamageable, the CoHealth component is now added to the entity.
+	(002) Implemented the health system for the chicken.
+	(003) Added new interface SpellBurn. Incendio now uses this interface as well (though full implementation still needed).
+	(004) Added interfaces SpellExplode, SpellFire, SpellMove, SpellStatus, and SpellStun.
+	(005) Added spells AvadaKedavra, Confringo, Crucio, Diffindo, Expulso, Reducto, and Sectumsempra. None of these have
+		  any effective implementation yet.
 [16][2012-06-01-14:52]
 	(001) Began implementation of health system by creating CoHealth component and Damageable interface for entities.
 	(002) Created EntityDamageable so we don't have to implement the same basic health functions a million times.

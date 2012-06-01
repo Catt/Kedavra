@@ -36,7 +36,7 @@ public class Chicken extends EntityDamageable {
 	public void collision(StateBasedGame sbg, Collidable other, Vector2f offset) {
 		// If the chicken is hit with the incendio spell, it explodes.
 		if(SpellDamage.class.isInstance(other)){
-			this.kill();
+			((SpellDamage)other).damage(this);
 		}
 		else{
 			//c//Path finding AI goes here...

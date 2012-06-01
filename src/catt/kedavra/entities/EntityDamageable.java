@@ -9,11 +9,12 @@ import catt.kedavra.components.CoHealth;
  *
  */
 public abstract class EntityDamageable extends Entity implements Damageable{
-	CoHealth health;
+	protected CoHealth health;
 	
 	public EntityDamageable(GameplayState gameplayState, int id, int x, int y, int collisionType, int maxHealth){
 		super(gameplayState, id, x, y, collisionType);
 		health = new CoHealth(0, maxHealth);
+		addComponent(health);
 	}
 	
 	public void damage(int amount){

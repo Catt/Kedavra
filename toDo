@@ -1,3 +1,13 @@
 ----TO DO----
 1) Implement health/damage system in already existing entities.
 2) Finish Chicken's collision detection.
+3) Implement burn method in Incendio (perhaps create an interface Burnable for entities?).
+4) Implementation required for these spells:
+	-Incendio
+	-Avada Kedavra
+	-Confringo
+	-Crucio
+	-Diffindo
+	-Expulso
+	-Reducto
+	-Sectumsempra

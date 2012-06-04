@@ -8,7 +8,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author AbsentMoniker
  *
  */
-public class CoMoveLinearPath extends Component implements Updatable{
+public class CoMoveLinearPath extends CoMove implements Updatable{
 	/** The owner's speed. **/
 	private float speed;
 	/** The owner's orientation (in degrees). **/
@@ -43,20 +43,22 @@ public class CoMoveLinearPath extends Component implements Updatable{
 	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
-		//Checks to see whether owner has reached end of path and needs to turn around.
-		distance += speed*delta;
-		if (distance > range){
-			distance = 0;
-			isForward = !isForward;
-		}
-		//Updates position based on current travel path.
-		if (isForward){
-			owner.addX((float)Math.cos(Math.toRadians(rotation))*speed*delta);
-			owner.addY((float)Math.sin(Math.toRadians(rotation))*speed*delta);
-		}
-		else{
-			owner.addX((float)Math.cos(Math.toRadians(rotation))*speed*delta*-1);
-			owner.addY((float)Math.sin(Math.toRadians(rotation))*speed*delta*-1);
+		if(!getStunned()){
+			//Checks to see whether owner has reached end of path and needs to turn around.
+			distance += speed*delta;
+			if (distance > range){
+				distance = 0;
+				isForward = !isForward;
+			}
+			//Updates position based on current travel path.
+			if (isForward){
+				owner.addX((float)Math.cos(Math.toRadians(rotation))*speed*delta);
+				owner.addY((float)Math.sin(Math.toRadians(rotation))*speed*delta);
+			}
+			else{
+				owner.addX((float)Math.cos(Math.toRadians(rotation))*speed*delta*-1);
+				owner.addY((float)Math.sin(Math.toRadians(rotation))*speed*delta*-1);
+			}
 		}
 	}
 	

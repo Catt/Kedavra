@@ -12,7 +12,7 @@ import catt.kedavra.GameplayState;
  * @author Catt
  *
  */
-public class CoMovePlayer extends Component implements Updatable {
+public class CoMovePlayer extends CoMove implements Updatable {
 	
 	/** The owner's speed along the x-axis. */
 	private float speedX;
@@ -57,198 +57,200 @@ public class CoMovePlayer extends Component implements Updatable {
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
-		Input input = gc.getInput();
-		//c//Toggle sprint.
-		if(input.isKeyDown(Input.KEY_LSHIFT)) {
-			sprint = true;
+		if (!getStunned()){
+			Input input = gc.getInput();
+			//c//Toggle sprint.
+			if(input.isKeyDown(Input.KEY_LSHIFT)) {
+				sprint = true;
+			}
+			else {
+				sprint = false;
+			}
+			//c//Find dominant directions.  Which ever key was more recently pressed becomes the dominant direction.
+			//c//If only one key is down, it becomes the dominant direction.
+			int pressedY = 0;
+			int pressedX = 0;
+			if(input.isKeyPressed(Input.KEY_W)){
+				dominantY = 1; pressedY = 1;
+			}
+			if(input.isKeyPressed(Input.KEY_S)){
+				dominantY = 2; pressedY = 2;
+			}
+			if(input.isKeyPressed(Input.KEY_A)){
+				dominantX = 1; pressedX = 1;
+			}
+			if(input.isKeyPressed(Input.KEY_D)){
+				dominantX = 2; pressedX = 2;
+			}
+			if(input.isKeyDown(Input.KEY_W) && !input.isKeyDown(Input.KEY_S))
+				dominantY = 1;
+			if(!input.isKeyDown(Input.KEY_W) && input.isKeyDown(Input.KEY_S))
+				dominantY = 2;
+			if(input.isKeyDown(Input.KEY_A) && !input.isKeyDown(Input.KEY_D))
+				dominantX = 1;
+			if(!input.isKeyDown(Input.KEY_A) && input.isKeyDown(Input.KEY_D))
+				dominantX = 2;
+			if(!input.isKeyDown(Input.KEY_W) && !input.isKeyDown(Input.KEY_S))
+				dominantY = 0;
+			if(!input.isKeyDown(Input.KEY_A) && !input.isKeyDown(Input.KEY_D))
+				dominantX = 0;
+			//Upwards movement
+			if(input.isKeyDown(Input.KEY_W) && dominantY != 2) {
+				//If the player is starting from rest, he is given an immediate burst of speed
+				if(pressedY == 1) {
+					speedY = -baseSpeed;
+				}
+				//Walking acceleration w/ speed cap
+				if(sprint == false) {
+					if(speedY <= -maxWalk) {
+						speedY = -maxWalk;
+					}
+					if(speedY > -maxWalk) {
+						speedY -= walkAccel*delta;
+					}
+				}
+				//Sprinting acceleration w/ speed cap
+				else{
+					if(speedY <= -maxSprint) {
+						speedY = -maxSprint;
+					}
+					if(speedY > -maxSprint) {
+						speedY -= sprintAccel*delta;
+					}
+				}
+			}
+			//Downwards movement
+			else if(input.isKeyDown(Input.KEY_S) && dominantY != 1) {
+				//If the player is starting from rest, he is given an immediate burst of speed
+				if(pressedY == 2) {
+					speedY = baseSpeed;
+				}
+				//Walking acceleration w/ speed cap
+				if(sprint == false) {
+					if(speedY >= maxWalk) {
+						speedY = maxWalk;
+					}
+					if(speedY < maxWalk) {
+						speedY += walkAccel*delta;
+					}
+				}
+				//Sprinting acceleration w/ speed cap
+				if(sprint == true) {
+					if(speedY >= maxSprint) {
+						speedY = maxSprint;
+					}
+					if(speedY < maxSprint) {
+						speedY += sprintAccel*delta;
+					}
+				}
+			}
+			//Vertical Friction
+			else {
+				//For downwards movement
+				if(speedY < 0) {
+					//Prevents overshoot
+					if((speedY += friction*delta) > 0) {
+						speedY = 0;
+					}
+					else {
+						speedY += friction*delta;
+					}
+				}
+				//For upwards movement
+				if(speedY > 0) {
+					//Prevents overshoot
+					if((speedY -= friction*delta) < 0) {
+						speedY = 0;
+					}
+					else {
+						speedY -= friction*delta;
+					}
+				}
+			}
+			//Left movement
+			if(input.isKeyDown(Input.KEY_A) && dominantX != 2) {
+				//If the player is starting from rest, he is given an immediate burst of speed
+				if(pressedX == 1) {
+					speedX = -baseSpeed;
+				}
+				//Walking acceleration w/ speed cap
+				if(sprint == false) {
+					if(speedX <= -maxWalk) {
+						speedX = -maxWalk;
+					}
+					if(speedX > -maxWalk) {
+						speedX -= walkAccel*delta;
+					}
+				}
+				//Sprinting acceleration w/ speed cap
+				if(sprint == true) {
+					if(speedX <= -maxSprint) {
+						speedX = -maxSprint;
+					}
+					if(speedY > -maxSprint) {
+						speedX -= sprintAccel*delta;
+					}
+				}
+			}
+			//Right movement
+			else if(input.isKeyDown(Input.KEY_D) && dominantX != 1) {
+				//If the player is starting from rest, he is given an immediate burst of speed
+				if(pressedX == 2) {
+					speedX = baseSpeed;
+				}
+				//Walking acceleration w/ speed cap
+				if(sprint == false) {
+					if(speedX >= maxWalk) {
+						speedX = maxWalk;
+					}
+					if(speedX < maxWalk) {
+						speedX += walkAccel*delta;
+					}
+				}
+				//Sprinting acceleration w/ speed cap
+				if(sprint == true) {
+					if(speedX >= maxSprint) {
+						speedX = maxSprint;
+					}
+					if(speedX < maxSprint) {
+						speedX += sprintAccel*delta;
+					}
+				}
+			}
+			//Horizontal Friction
+			else {
+				//For right movement
+				if(speedX > 0) {
+					//Prevents overshoot
+					if((speedX -= friction*delta) < 0) {
+						speedX = 0;
+					}
+					else {
+						speedX -= friction*delta;
+					}
+				}
+				//For left movement
+				if(speedX < 0) {
+					//Prevents overshoot
+					if((speedX += friction*delta) > 0) {
+						speedX = 0;
+					}
+					else {
+						speedX += friction*delta;
+					}
+				}
+			}
+			//Establish position
+			owner.addX(speedX*delta);
+			owner.addY(speedY*delta);
+			//c//Move the camera.
+			GameplayState gps = (GameplayState)sbg.getCurrentState();
+			gps.addCamX(speedX*delta);
+			gps.addCamY(speedY*delta);
+			//Rotation
+			rotation = (float)Math.toDegrees(Math.atan2((input.getMouseY()-(owner.getY()-gps.getCamY())),(input.getMouseX()-(owner.getX()-gps.getCamX()))));
+			owner.setRotation(rotation);
 		}
-		else {
-			sprint = false;
-		}
-		//c//Find dominant directions.  Which ever key was more recently pressed becomes the dominant direction.
-		//c//If only one key is down, it becomes the dominant direction.
-		int pressedY = 0;
-		int pressedX = 0;
-		if(input.isKeyPressed(Input.KEY_W)){
-			dominantY = 1; pressedY = 1;
-		}
-		if(input.isKeyPressed(Input.KEY_S)){
-			dominantY = 2; pressedY = 2;
-		}
-		if(input.isKeyPressed(Input.KEY_A)){
-			dominantX = 1; pressedX = 1;
-		}
-		if(input.isKeyPressed(Input.KEY_D)){
-			dominantX = 2; pressedX = 2;
-		}
-		if(input.isKeyDown(Input.KEY_W) && !input.isKeyDown(Input.KEY_S))
-			dominantY = 1;
-		if(!input.isKeyDown(Input.KEY_W) && input.isKeyDown(Input.KEY_S))
-			dominantY = 2;
-		if(input.isKeyDown(Input.KEY_A) && !input.isKeyDown(Input.KEY_D))
-			dominantX = 1;
-		if(!input.isKeyDown(Input.KEY_A) && input.isKeyDown(Input.KEY_D))
-			dominantX = 2;
-		if(!input.isKeyDown(Input.KEY_W) && !input.isKeyDown(Input.KEY_S))
-			dominantY = 0;
-		if(!input.isKeyDown(Input.KEY_A) && !input.isKeyDown(Input.KEY_D))
-			dominantX = 0;
-		//Upwards movement
-		if(input.isKeyDown(Input.KEY_W) && dominantY != 2) {
-			//If the player is starting from rest, he is given an immediate burst of speed
-			if(pressedY == 1) {
-				speedY = -baseSpeed;
-			}
-			//Walking acceleration w/ speed cap
-			if(sprint == false) {
-				if(speedY <= -maxWalk) {
-					speedY = -maxWalk;
-				}
-				if(speedY > -maxWalk) {
-					speedY -= walkAccel*delta;
-				}
-			}
-			//Sprinting acceleration w/ speed cap
-			else{
-				if(speedY <= -maxSprint) {
-					speedY = -maxSprint;
-				}
-				if(speedY > -maxSprint) {
-					speedY -= sprintAccel*delta;
-				}
-			}
-		}
-		//Downwards movement
-		else if(input.isKeyDown(Input.KEY_S) && dominantY != 1) {
-			//If the player is starting from rest, he is given an immediate burst of speed
-			if(pressedY == 2) {
-				speedY = baseSpeed;
-			}
-			//Walking acceleration w/ speed cap
-			if(sprint == false) {
-				if(speedY >= maxWalk) {
-					speedY = maxWalk;
-				}
-				if(speedY < maxWalk) {
-					speedY += walkAccel*delta;
-				}
-			}
-			//Sprinting acceleration w/ speed cap
-			if(sprint == true) {
-				if(speedY >= maxSprint) {
-					speedY = maxSprint;
-				}
-				if(speedY < maxSprint) {
-					speedY += sprintAccel*delta;
-				}
-			}
-		}
-		//Vertical Friction
-		else {
-			//For downwards movement
-			if(speedY < 0) {
-				//Prevents overshoot
-				if((speedY += friction*delta) > 0) {
-					speedY = 0;
-				}
-				else {
-					speedY += friction*delta;
-				}
-			}
-			//For upwards movement
-			if(speedY > 0) {
-				//Prevents overshoot
-				if((speedY -= friction*delta) < 0) {
-					speedY = 0;
-				}
-				else {
-					speedY -= friction*delta;
-				}
-			}
-		}
-		//Left movement
-		if(input.isKeyDown(Input.KEY_A) && dominantX != 2) {
-			//If the player is starting from rest, he is given an immediate burst of speed
-			if(pressedX == 1) {
-				speedX = -baseSpeed;
-			}
-			//Walking acceleration w/ speed cap
-			if(sprint == false) {
-				if(speedX <= -maxWalk) {
-					speedX = -maxWalk;
-				}
-				if(speedX > -maxWalk) {
-					speedX -= walkAccel*delta;
-				}
-			}
-			//Sprinting acceleration w/ speed cap
-			if(sprint == true) {
-				if(speedX <= -maxSprint) {
-					speedX = -maxSprint;
-				}
-				if(speedY > -maxSprint) {
-					speedX -= sprintAccel*delta;
-				}
-			}
-		}
-		//Right movement
-		else if(input.isKeyDown(Input.KEY_D) && dominantX != 1) {
-			//If the player is starting from rest, he is given an immediate burst of speed
-			if(pressedX == 2) {
-				speedX = baseSpeed;
-			}
-			//Walking acceleration w/ speed cap
-			if(sprint == false) {
-				if(speedX >= maxWalk) {
-					speedX = maxWalk;
-				}
-				if(speedX < maxWalk) {
-					speedX += walkAccel*delta;
-				}
-			}
-			//Sprinting acceleration w/ speed cap
-			if(sprint == true) {
-				if(speedX >= maxSprint) {
-					speedX = maxSprint;
-				}
-				if(speedX < maxSprint) {
-					speedX += sprintAccel*delta;
-				}
-			}
-		}
-		//Horizontal Friction
-		else {
-			//For right movement
-			if(speedX > 0) {
-				//Prevents overshoot
-				if((speedX -= friction*delta) < 0) {
-					speedX = 0;
-				}
-				else {
-					speedX -= friction*delta;
-				}
-			}
-			//For left movement
-			if(speedX < 0) {
-				//Prevents overshoot
-				if((speedX += friction*delta) > 0) {
-					speedX = 0;
-				}
-				else {
-					speedX += friction*delta;
-				}
-			}
-		}
-		//Establish position
-		owner.addX(speedX*delta);
-		owner.addY(speedY*delta);
-		//c//Move the camera.
-		GameplayState gps = (GameplayState)sbg.getCurrentState();
-		gps.addCamX(speedX*delta);
-		gps.addCamY(speedY*delta);
-		//Rotation
-		rotation = (float)Math.toDegrees(Math.atan2((input.getMouseY()-(owner.getY()-gps.getCamY())),(input.getMouseX()-(owner.getX()-gps.getCamX()))));
-		owner.setRotation(rotation);
 	}
 
 }

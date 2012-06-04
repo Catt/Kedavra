@@ -30,7 +30,8 @@ public class Player extends Entity {
 		//c//Add sprite.
 		addComponent(new CoRender(0, game.data.getImage("player")));
 		//c//Add WSAD movement with mouse orientation.
-		addComponent(new CoMovePlayer(1, .11f, .25f, .4f, .0004f, .0007f));
+		movement = new CoMovePlayer(1, .11f, .25f, .4f, .0004f, .0007f);
+		addComponent(movement);
 		addComponent(new CoCastPlayer(2));
 		addComponent(new CoPing(3,100,100,Input.KEY_HOME));
 		//c//Set the bounding circle's size.

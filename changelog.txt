@@ -1,5 +1,14 @@
 _*_*_*_*_ FIXES AND CHANGES _*_*_*_*_
  * * * *   
+[18][2012-06-04-13:00]
+	(001) Created abstract CoMove component so that all movement components can share basic properties.
+	(002) Created Petrificus Totalus and began implementation - functionality is up, but looks the same as Incendio.
+	(003) Player now fires Petrificus Totalus with left mouse button
+	(004) In CoMove, created attributes and methods related to being stunned.
+	(005) In all components that cause movement, movement will not occur if the entity is stunned.
+	(006) Added a method in Entity that sets a component to be removed at the end of the update loop. 
+	(007) The update method within Entity removes the specified component (if there is one) at the end of the loop.
+	(008) Chickens can now be stunned - movement stops, though the Saunter animation remains for the moment.
 [17][2012-06-01-17:18]
 	(001) In EntityDamageable, the CoHealth component is now added to the entity.
 	(002) Implemented the health system for the chicken.

@@ -10,7 +10,7 @@ import catt.kedavra.entities.Entity;
  * @author Zhengman777
  * @author Catt
  */
-public class CoMoveWand extends Component implements Updatable {
+public class CoMoveWand extends CoMove implements Updatable {
 	
 	Entity caster;
 	
@@ -26,9 +26,11 @@ public class CoMoveWand extends Component implements Updatable {
 
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
-		owner.setX((float)(caster.getX()+caster.getCollisionRadii()[0]*Math.cos(Math.toRadians(caster.getRotation()))));
-		owner.setY((float)(caster.getY()+caster.getCollisionRadii()[0]*Math.sin(Math.toRadians(caster.getRotation()))));
-		owner.setRotation(caster.getRotation());
+		if(!getStunned()){
+			owner.setX((float)(caster.getX()+caster.getCollisionRadii()[0]*Math.cos(Math.toRadians(caster.getRotation()))));
+			owner.setY((float)(caster.getY()+caster.getCollisionRadii()[0]*Math.sin(Math.toRadians(caster.getRotation()))));
+			owner.setRotation(caster.getRotation());
+		}
 	}
 
 }

@@ -7,6 +7,7 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import catt.kedavra.GameplayState;
+import catt.kedavra.components.CoMove;
 import catt.kedavra.components.Component;
 import catt.kedavra.components.Renderable;
 import catt.kedavra.components.Updatable;
@@ -39,6 +40,10 @@ public abstract class Entity implements Renderable, Updatable, Collidable{
 	protected int collisionRadii [] = null;
 	/** This Entity's rotation in 2D space. */
 	protected float rotation = 0;
+	/** This Entity's movement pattern (if it has one) */
+	protected CoMove movement;
+	/** a component that should be removed at the end of the update */
+	protected Component removeThis;
 	
 	/**
 	 * Creates a new Entity with the specified id and collisionType.
@@ -247,6 +252,10 @@ public abstract class Entity implements Renderable, Updatable, Collidable{
 	public void update(GameContainer gc, StateBasedGame sbg, int delta){
 		for(Updatable updater : updaters)
 			updater.update(gc, sbg, delta);
+		if (getRemove() != null){
+			removeComponent(getRemove());
+			setRemove(null);
+		}
 	}
 	
 	/**
@@ -266,6 +275,24 @@ public abstract class Entity implements Renderable, Updatable, Collidable{
 		StringBuilder sb = new StringBuilder("ID:");
 		sb.append(getId());
 		return sb.toString();
+	}
+	
+	/**
+	 * 
+	 * @return The movement component if the entity has one, or null if it does not.
+	 */
+	public CoMove getMove(){
+		if(movement != null)
+			return movement;
+		else
+			return null;
+	}
+	
+	public void setRemove(Component component){
+		removeThis = component;
+	}
+	public Component getRemove(){
+		return removeThis;
 	}
 
 }

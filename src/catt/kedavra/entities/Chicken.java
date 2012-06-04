@@ -9,6 +9,7 @@ import catt.kedavra.components.CoAnimate;
 import catt.kedavra.components.CoCull;
 import catt.kedavra.components.CoMove_Saunter;
 import catt.kedavra.entities.spells.SpellDamage;
+import catt.kedavra.entities.spells.SpellStun;
 
 /**
  * This entity represents a chicken best used for target practice.
@@ -27,16 +28,21 @@ public class Chicken extends EntityDamageable {
 	public Chicken(GameplayState gameState, int id, int x, int y){
 		super(gameState, id, x, y, Collidable.CT_CIRCLE, HEALTH);
 		addComponent(new CoAnimate(0, gameState.data.getImage("chicken_top"), 50, 40, 200));
-		addComponent(new CoMove_Saunter(1, 0.2f, 0.05f));
+		movement = new CoMove_Saunter(1, 0.2f, 0.05f);
+		addComponent(movement);
 		addComponent(new CoCull(2,Input.KEY_DELETE));
 		collisionRadii[0] = 20;
 	}
 	
 	@Override
 	public void collision(StateBasedGame sbg, Collidable other, Vector2f offset) {
-		// If the chicken is hit with the incendio spell, it explodes.
+		// If the chicken is hit with a damage spell, it explodes.
 		if(SpellDamage.class.isInstance(other)){
 			((SpellDamage)other).damage(this);
+		}
+		// If the chicken is hit with a stun spell, it gets stunned (what a surprise)
+		else if(SpellStun.class.isInstance(other)){
+			((SpellStun)other).stun(this);
 		}
 		else{
 			//c//Path finding AI goes here...

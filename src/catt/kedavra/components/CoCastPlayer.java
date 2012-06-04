@@ -5,6 +5,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 import catt.kedavra.entities.Wand;
 import catt.kedavra.entities.spells.Incendio;
+import catt.kedavra.entities.spells.PetrificusTotalus;
 
 /**
  * The CoCastPlayer component can be added to an Entity to allow it to create spells through manual input.
@@ -30,6 +31,12 @@ public class CoCastPlayer extends Component implements Updatable{
 			int incY = (int)(owner.getY()+Math.sin(Math.toRadians(owner.getRotation()))*(owner.getCollisionRadii()[0]+Wand.LENGTH));
 			Incendio incendio = new Incendio(owner.getGame(), owner.getGame().nextID_ent(), incX, incY, owner.getRotation());
 			incendio.spawn();
+		}
+		else if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON)){
+			int petX = (int)(owner.getX()+Math.cos(Math.toRadians(owner.getRotation()))*(owner.getCollisionRadii()[0]+Wand.LENGTH));
+			int petY = (int)(owner.getY()+Math.sin(Math.toRadians(owner.getRotation()))*(owner.getCollisionRadii()[0]+Wand.LENGTH));
+			PetrificusTotalus petrificusTotalus = new PetrificusTotalus(owner.getGame(), owner.getGame().nextID_ent(), petX, petY, owner.getRotation());
+			petrificusTotalus.spawn();
 		}
 	}
 

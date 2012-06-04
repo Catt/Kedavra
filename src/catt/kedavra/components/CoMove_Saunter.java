@@ -8,7 +8,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author Catt
  *
  */
-public class CoMove_Saunter extends Component implements Updatable {
+public class CoMove_Saunter extends CoMove implements Updatable {
 	
 	/** The owner's speed along the x-axis. */
 	private float speedX;
@@ -42,25 +42,29 @@ public class CoMove_Saunter extends Component implements Updatable {
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
-		//c//If attention has run out...
-		if(attention <= 0){
-			//c//Pick a random direction!
-			rotation = (float)(Math.random()*360.f);
-			//c//Pick a random speed!
-			float p = (float)Math.random();
-			speedX = (p)*(maxSpeed)*(float)Math.cos(Math.toRadians(rotation));
-			speedY = (p)*(maxSpeed)*(float)Math.sin(Math.toRadians(rotation));
-			//c//Set rotation.
-			owner.setRotation(rotation);
-			//c//Start again.
-			attention = (int)(Math.random()*5000);
+		//No movement will happen if the entity is stunned.
+		if(!getStunned()){
+			//c//If attention has run out...
+			if(attention <= 0){
+				//c//Pick a random direction!
+				rotation = (float)(Math.random()*360.f);
+				//c//Pick a random speed!
+				float p = (float)Math.random();
+				speedX = (p)*(maxSpeed)*(float)Math.cos(Math.toRadians(rotation));
+				speedY = (p)*(maxSpeed)*(float)Math.sin(Math.toRadians(rotation));
+				//c//Set rotation.
+				owner.setRotation(rotation);
+				//c//Start again.
+				attention = (int)(Math.random()*5000);
+			}
+			else{
+				attention -= delta;
+			}
+			//c//Set position.
+		
+			owner.addX(speedX*delta);
+			owner.addY(speedY*delta);
 		}
-		else{
-			attention -= delta;
-		}
-		//c//Set position.
-		owner.addX(speedX*delta);
-		owner.addY(speedY*delta);
 	}
 
 }

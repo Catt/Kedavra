@@ -11,7 +11,7 @@ import catt.kedavra.GameplayState;
  *
  */
 
-public class CoMoveLinear extends Component implements Updatable {
+public class CoMoveLinear extends CoMove implements Updatable {
 	
 	/** The owner's speed. **/
 	private float speed;
@@ -37,16 +37,18 @@ public class CoMoveLinear extends Component implements Updatable {
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
-		//Checks to see if the entity has traveled the maximum distance.
-		if(speed*delta+distance > range) {
-			((GameplayState)sbg.getCurrentState()).removeRendered(owner);
-			((GameplayState)sbg.getCurrentState()).removeUpdated(owner);
-			((GameplayState)sbg.getCurrentState()).removeCollider(owner);
-		}
-		else {
-			distance += speed*delta;
-			owner.addX((float)Math.cos(Math.toRadians(rotation))*speed*delta);
-			owner.addY((float)Math.sin(Math.toRadians(rotation))*speed*delta);
+		if(!getStunned()){
+			//Checks to see if the entity has traveled the maximum distance.
+			if(speed*delta+distance > range) {
+				((GameplayState)sbg.getCurrentState()).removeRendered(owner);
+				((GameplayState)sbg.getCurrentState()).removeUpdated(owner);
+				((GameplayState)sbg.getCurrentState()).removeCollider(owner);
+			}
+			else {
+				distance += speed*delta;
+				owner.addX((float)Math.cos(Math.toRadians(rotation))*speed*delta);
+				owner.addY((float)Math.sin(Math.toRadians(rotation))*speed*delta);
+			}
 		}
 	}
 

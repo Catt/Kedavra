@@ -40,10 +40,17 @@ public abstract class Entity implements Renderable, Updatable, Collidable{
 	protected int collisionRadii [] = null;
 	/** This Entity's rotation in 2D space. */
 	protected float rotation = 0;
-	/** This Entity's movement pattern (if it has one) */
-	protected CoMove movement;
 	/** a component that should be removed at the end of the update */
 	protected Component removeThis;
+	//The following constants are used to organize an entity's components
+	/** The ID representing how an entity looks (CoRender or CoAnimate) */
+	public static final int ID_DISPLAY = 0;
+	/** The ID representing an entity's movement pattern (a class extending CoMove) */
+	public static final int ID_MOVEMENT = 1;
+	/** The ID representing an entity's health system */
+	public static final int ID_HEALTH = 2;
+	/** The ID representing a miscellaneous feature of an entity (should only be used if uncategorizable) */
+	public static final int ID_MISC = 3;
 	
 	/**
 	 * Creates a new Entity with the specified id and collisionType.
@@ -124,7 +131,11 @@ public abstract class Entity implements Renderable, Updatable, Collidable{
 	 */
 	public Component getComponent(int id)
 	{
-		return components.get(id);
+		for (int i = 0; i < components.size(); i++){
+			if (components.get(i).getId()==id)
+				return components.get(i);
+		}
+		return null;
 	}
 	
 	/**
@@ -276,18 +287,6 @@ public abstract class Entity implements Renderable, Updatable, Collidable{
 		sb.append(getId());
 		return sb.toString();
 	}
-	
-	/**
-	 * 
-	 * @return The movement component if the entity has one, or null if it does not.
-	 */
-	public CoMove getMove(){
-		if(movement != null)
-			return movement;
-		else
-			return null;
-	}
-	
 	public void setRemove(Component component){
 		removeThis = component;
 	}

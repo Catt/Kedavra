@@ -25,7 +25,7 @@ public class Crate_Wide extends Entity {
 	public Crate_Wide(GameplayState gameState, int id, int x, int y) {
 		super(gameState, id, x, y, Collidable.CT_RECTANGLE);
 		//c//Add sprite.
-		addComponent(new CoRender(0, game.data.getImage("crate_wide")));
+		addComponent(new CoRender(ID_DISPLAY, game.data.getImage("crate_wide")));
 		//Set the bounding rectangle's size.
 		collisionRadii[0] = 50;
 		collisionRadii[1] = 25;

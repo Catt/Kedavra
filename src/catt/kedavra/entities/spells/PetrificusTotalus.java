@@ -5,6 +5,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import catt.kedavra.GameplayState;
 import catt.kedavra.components.CoAnimate;
+import catt.kedavra.components.CoMove;
 import catt.kedavra.components.CoMoveLinear;
 import catt.kedavra.components.CoStun;
 import catt.kedavra.entities.Collidable;
@@ -16,12 +17,11 @@ public class PetrificusTotalus extends Spell implements SpellStun {
 	
 	public PetrificusTotalus(GameplayState gameState, int id, int x, int y, float rotation) {
 		super(gameState, id, x, y, Collidable.CT_CIRCLE);
-		addComponent(new CoAnimate(0, game.data.getImage("aniIncendio"), 30, 8, 50));
+		addComponent(new CoAnimate(ID_DISPLAY, game.data.getImage("aniPetTot"), 30, 8, 50));
 		game.data.playSound("incendio");
 		this.rotation = rotation;
 		//Add movement.
-		movement = new CoMoveLinear(1, .5f, rotation, 400);
-		addComponent(movement);
+		addComponent(new CoMoveLinear(ID_MOVEMENT, .5f, rotation, 400));
 		//Set the bounding circle's size.
 		collisionRadii[0] = 15;
 	}
@@ -37,8 +37,8 @@ public class PetrificusTotalus extends Spell implements SpellStun {
 
 	@Override
 	public void stun(Entity recipient) {
-		if (recipient.getMove() != null){
-			if (!recipient.getMove().getStunned())
+		if (recipient.getComponent(ID_MOVEMENT) != null){
+			if (!((CoMove)recipient.getComponent(ID_MOVEMENT)).getStunned())
 				recipient.addComponent(new CoStun(5, 5000));
 		}
 		

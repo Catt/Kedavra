@@ -33,6 +33,7 @@ public class Data {
 		addImage("rock", "img/rock.png");
 		addImage("aniSpark", "img/aniSpark.png");
 		addImage("aniIncendio","img/aniIncendio.png");
+		addImage("aniPetTot","img/aniPetTot.png");
 		
 		//c//Add sounds.
 		addSound("chickenDeath", "snd/ChickenDeath.wav");

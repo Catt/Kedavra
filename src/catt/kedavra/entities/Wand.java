@@ -28,9 +28,8 @@ public class Wand extends Entity {
 	 */
 	public Wand(GameplayState gameState, int id, int x, int y, Image sprite, Entity caster) {
 		super(gameState, id, x, y, Collidable.CT_NONE);
-		addComponent(new CoRender(0, sprite));
-		movement = new CoMoveWand(1, caster);
-		addComponent(movement);
+		addComponent(new CoRender(ID_DISPLAY, sprite));
+		addComponent(new CoMoveWand(ID_MOVEMENT, caster));
 	}
 
 

@@ -1,5 +1,11 @@
 _*_*_*_*_ FIXES AND CHANGES _*_*_*_*_
  * * * *   
+[19][2012-06-06-18:10]
+	(001) Created/implemented Component ID system in entities. This standardizes the component retrieval process.
+	(002) Fixed getComponent method in Entity. Now it searches for the component with the specified ID rather than
+		  accessing the Component at the specified index of the components ArrayList.
+	(003) Changed CoStun/Petrificus Totalus to reflect the changes made above.
+	(004) Created unique animation for Petrificus Totalus (only a palette swap of Incendio, though).
 [18][2012-06-04-13:00]
 	(001) Created abstract CoMove component so that all movement components can share basic properties.
 	(002) Created Petrificus Totalus and began implementation - functionality is up, but looks the same as Incendio.

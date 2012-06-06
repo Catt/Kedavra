@@ -25,7 +25,7 @@ public class Rock extends Entity {
 	public Rock(GameplayState gameState, int id, int x, int y) {
 		super(gameState, id, x, y, Collidable.CT_CIRCLE);
 		//c//Add sprite.
-		addComponent(new CoRender(0, game.data.getImage("rock")));
+		addComponent(new CoRender(ID_DISPLAY, game.data.getImage("rock")));
 		//Set the bounding circle's size.
 		collisionRadii[0] = 32;
 		

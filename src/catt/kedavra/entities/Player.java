@@ -28,12 +28,11 @@ public class Player extends Entity {
 	public Player(GameplayState gameState, int id, int x, int y) {
 		super(gameState, id, x, y, Collidable.CT_CIRCLE);
 		//c//Add sprite.
-		addComponent(new CoRender(0, game.data.getImage("player")));
+		addComponent(new CoRender(ID_DISPLAY, game.data.getImage("player")));
 		//c//Add WSAD movement with mouse orientation.
-		movement = new CoMovePlayer(1, .11f, .25f, .4f, .0004f, .0007f);
-		addComponent(movement);
-		addComponent(new CoCastPlayer(2));
-		addComponent(new CoPing(3,100,100,Input.KEY_HOME));
+		addComponent(new CoMovePlayer(ID_MOVEMENT, .11f, .25f, .4f, .0004f, .0007f));
+		addComponent(new CoCastPlayer(ID_MISC));
+		addComponent(new CoPing(4,100,100,Input.KEY_HOME));
 		//c//Set the bounding circle's size.
 		collisionRadii[0] = 25;
 		

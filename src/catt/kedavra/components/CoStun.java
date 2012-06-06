@@ -3,6 +3,8 @@ package catt.kedavra.components;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
+import catt.kedavra.entities.Entity;
+
 public class CoStun extends Component implements Updatable{
 	private int time;
 	private int counter = 0;
@@ -14,9 +16,9 @@ public class CoStun extends Component implements Updatable{
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
-		owner.getMove().setStunned(true);
+		((CoMove)owner.getComponent(Entity.ID_MOVEMENT)).setStunned(true);
 		if (counter >= time){
-			owner.getMove().setStunned(false);
+			((CoMove)owner.getComponent(Entity.ID_MOVEMENT)).setStunned(false);
 			owner.setRemove(this);
 			return;
 		}

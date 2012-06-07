@@ -19,7 +19,7 @@ public class CoCastPlayer extends Component implements Updatable{
 	 * Initialize a new CoCastPlayer Component.
 	 * @param id This Component's unique id.
 	 */
-	public CoCastPlayer(int id) {
+	public CoCastPlayer(String id) {
 		this.id = id;
 	}
 

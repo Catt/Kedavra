@@ -12,7 +12,7 @@ import catt.kedavra.entities.Entity;
 public abstract class Component {
 
 	/** This Component's unique id. */
-	protected int id;
+	protected String id;
 	/** The Entity to which this Component belongs. */
 	protected Entity owner;
 	
@@ -20,7 +20,7 @@ public abstract class Component {
 	 * Fetches this components unique id.
 	 * @return id
 	 */
-	public int getId(){
+	public String getId(){
 		return id;
 	}
 	

@@ -30,7 +30,7 @@ public class CoAnimate extends Component implements Renderable, Updatable{
 	 * @param tileSizeY The height of the sprite unit in the sheet.
 	 * @param duration How long each sprite is displayed for.
 	 */
-	public CoAnimate(int id, Image spriteStrip, int tileSizeX, int tileSizeY, int duration){
+	public CoAnimate(String id, Image spriteStrip, int tileSizeX, int tileSizeY, int duration){
 		SpriteSheet ss = new SpriteSheet(spriteStrip,tileSizeX, tileSizeY);
 		Animation animation = new Animation(ss,duration);
 		this.id = id;

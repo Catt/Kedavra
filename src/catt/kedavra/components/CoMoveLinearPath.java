@@ -29,7 +29,7 @@ public class CoMoveLinearPath extends CoMove implements Updatable{
 	 * @param start The location along the path where the Entity will begin its movement.
 	 * @param direction The direction the Entity will begin moving.
 	 */
-	public CoMoveLinearPath(int id, float speed, float rotation, int range, float start, boolean direction) {
+	public CoMoveLinearPath(String id, float speed, float rotation, int range, float start, boolean direction) {
 		this.id = id;
 		this.speed = speed;
 		this.rotation = rotation;

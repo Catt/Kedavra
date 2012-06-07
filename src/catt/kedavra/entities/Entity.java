@@ -1,13 +1,12 @@
 package catt.kedavra.entities;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import catt.kedavra.GameplayState;
-import catt.kedavra.components.CoMove;
 import catt.kedavra.components.Component;
 import catt.kedavra.components.Renderable;
 import catt.kedavra.components.Updatable;
@@ -29,28 +28,21 @@ public abstract class Entity implements Renderable, Updatable, Collidable{
 	/** This entity's position, given in the Vector2f format (specific to the Slick2D library). */
 	protected Vector2f position = new Vector2f(0,0);
 	/** A list of all components added to this Entity. It's rarely used, as components are usually accessed as updaters or renderers. */
-	protected ArrayList<Component> components = new ArrayList<Component>();
+	protected LinkedList<Component> components = new LinkedList<Component>();
 	/** A list of all added components which have implemented the Updatable interface. */
-	protected ArrayList<Updatable> updaters = new ArrayList<Updatable>();
+	protected LinkedList<Updatable> updaters = new LinkedList<Updatable>();
 	/** A list of all added components which have implemented the Renderable interface. */
-	protected ArrayList<Renderable> renderers = new ArrayList<Renderable>();
+	protected LinkedList<Renderable> renderers = new LinkedList<Renderable>();
 	/** The type of collision used by the Great and Powerful Collidinator in its Most Righteous Judgment. See Collidable for types. */
 	protected int collisionType = 0;
 	/** The radius (or radii) used for collision detection bounding circles (or boxes). */
 	protected int collisionRadii [] = null;
 	/** This Entity's rotation in 2D space. */
 	protected float rotation = 0;
-	/** a component that should be removed at the end of the update */
-	protected Component removeThis;
-	//The following constants are used to organize an entity's components
-	/** The ID representing how an entity looks (CoRender or CoAnimate) */
-	public static final int ID_DISPLAY = 0;
-	/** The ID representing an entity's movement pattern (a class extending CoMove) */
-	public static final int ID_MOVEMENT = 1;
-	/** The ID representing an entity's health system */
-	public static final int ID_HEALTH = 2;
-	/** The ID representing a miscellaneous feature of an entity (should only be used if uncategorizable) */
-	public static final int ID_MISC = 3;
+	/** A list of all components to be added before the next update. */
+	private LinkedList<Component> addQueue = new LinkedList<Component>();
+	/** A list of all components to be removed before the next update. */
+	private LinkedList<Component> removeQueue = new LinkedList<Component>();
 	
 	/**
 	 * Creates a new Entity with the specified id and collisionType.
@@ -103,38 +95,35 @@ public abstract class Entity implements Renderable, Updatable, Collidable{
 	 * it will be added to the respective lists for calling in the game's render and update methods. 
 	 * @param component The component to be added.
 	 */
-	public void addComponent(Component component){		
+	public void addComponent(Component component){	
 		component.setOwner(this);
+		addQueue.add(component);
 		components.add(component);
-		if(Renderable.class.isInstance(component)){
-			renderers.add((Renderable)component);
-		}
-		if(Updatable.class.isInstance(component)){
-			updaters.add((Updatable)component);
-		}
-	}
-	
-	public void removeComponent(Component component){
-		components.remove(component);
-		if(Renderable.class.isInstance(component)){
-			renderers.remove((Renderable)component);
-		}
-		if(Updatable.class.isInstance(component)){
-			updaters.remove((Updatable)component);
-		}
 	}
 	
 	/**
-	 * Fetches the component with the given id.
+	 * Removes the specified component from this entity. 
+	 * @param component The component to be removed.
+	 */
+	public void removeComponent(Component component){
+		removeQueue.add(component);
+		components.remove(component);
+	}
+	
+	/**
+	 * Fetches the component with the given id.  If no specific id is found, returns the first component with the given 
+	 * id prefix. If none is found, returns null.
 	 * @param id The id of the component to be retrieved.
 	 * @return The component.
 	 */
-	public Component getComponent(int id)
+	public Component getComponent(String id)
 	{
-		for (int i = 0; i < components.size(); i++){
-			if (components.get(i).getId()==id)
-				return components.get(i);
-		}
+		for (Component c : components)
+			if (c.getId().equals(id))
+				return c;
+			else if(c.getId().startsWith(id)){
+				return c;
+			}
 		return null;
 	}
 	
@@ -165,6 +154,25 @@ public abstract class Entity implements Renderable, Updatable, Collidable{
 	}
 	
 	/**
+	 * Adds the value to the Entity's position vector, such that the magnitude is increased but the direction is not changed.
+	 * @param addend The value to be added.
+	 */
+	public void addInDirection(float addend){
+		Vector2f v = new Vector2f(addend,0);
+		v.setTheta(this.rotation);
+		this.position.add(v);
+	}
+	/**
+	 * Adds the value to the Entity's position vector, given the specified direction.
+	 * @param addend The value to be added.
+	 */
+	public void addInDirection(float addend, double rotation){
+		Vector2f v = new Vector2f(addend,0);
+		v.setTheta(rotation);
+		this.position.add(v);
+	}
+	
+	/**
 	 * Fetches the rotation of this Entity.
 	 * @return The rotation
 	 */
@@ -178,6 +186,14 @@ public abstract class Entity implements Renderable, Updatable, Collidable{
 	 */
 	public void setRotation(float rotate) {
 		rotation = rotate;
+	}
+	
+	/** 
+	 * Adds the value to this Entity's rotation. 
+	 * @param rotate
+	 */
+	public void addRotation(float rotate) {
+		rotation += rotate;
 	}
 	
 	/**
@@ -263,10 +279,6 @@ public abstract class Entity implements Renderable, Updatable, Collidable{
 	public void update(GameContainer gc, StateBasedGame sbg, int delta){
 		for(Updatable updater : updaters)
 			updater.update(gc, sbg, delta);
-		if (getRemove() != null){
-			removeComponent(getRemove());
-			setRemove(null);
-		}
 	}
 	
 	/**
@@ -277,6 +289,9 @@ public abstract class Entity implements Renderable, Updatable, Collidable{
 	 * @param g The Graphics used to draw. This parameter can be casted to Graphics2D for additional features.
 	 */
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g){
+		//c//Add new components before rendering.
+		addQueue();
+		removeQueue();
 		for(Renderable renderer : renderers)
 			renderer.render(gc, sbg, g);
 	}
@@ -287,11 +302,27 @@ public abstract class Entity implements Renderable, Updatable, Collidable{
 		sb.append(getId());
 		return sb.toString();
 	}
-	public void setRemove(Component component){
-		removeThis = component;
+	
+	private void addQueue(){
+		for (Component c : addQueue) {
+			if (Renderable.class.isInstance(c)) {
+				renderers.add((Renderable) c);
+			}
+			if (Updatable.class.isInstance(c)) {
+				updaters.add((Updatable) c);
+			}
+		}
 	}
-	public Component getRemove(){
-		return removeThis;
+
+	private void removeQueue(){
+		for (Component c : removeQueue) {
+			if (Renderable.class.isInstance(c)) {
+				renderers.remove((Renderable) c);
+			}
+			if (Updatable.class.isInstance(c)) {
+				updaters.remove((Updatable) c);
+			}
+		}
 	}
 
 }

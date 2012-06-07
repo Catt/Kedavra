@@ -30,11 +30,11 @@ public class Incendio extends Spell implements SpellDamage, SpellFire {
 	public Incendio(GameplayState gameState, int id, int x, int y, float rotation) {
 		super(gameState, id, x, y, Collidable.CT_CIRCLE);
 		this.power = POWER;
-		addComponent(new CoAnimate(ID_DISPLAY, game.data.getImage("aniIncendio"), 30, 8, 50));
+		addComponent(new CoAnimate("Animate", game.data.getImage("aniIncendio"), 30, 8, 50));
 		game.data.playSound("incendio");
 		this.rotation = rotation;
 		//Add movement.
-		addComponent(new CoMoveLinear(ID_MOVEMENT, .5f, rotation, 400));
+		addComponent(new CoMoveLinear("Move_Linear", .5f, rotation, 400));
 		//Set the bounding circle's size.
 		collisionRadii[0] = 15;
 	}

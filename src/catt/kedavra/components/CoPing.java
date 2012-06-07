@@ -19,7 +19,7 @@ public class CoPing extends Component implements Updatable{
 	 * 
 	 * @param id This Component's unique id.
 	 */
-	public CoPing(int id, int x, int y, int key) {
+	public CoPing(String id, int x, int y, int key) {
 		this.id = id;
 		this.x = x;
 		this.y = y;

@@ -29,7 +29,7 @@ public class CoMoveLinear extends CoMove implements Updatable {
 	 * @param rotation The owner's orientation (in degrees).
 	 * @param range The maximum distance that the Entity can travel
 	 */
-	public CoMoveLinear(int id, float speed, float rotation, int range) {
+	public CoMoveLinear(String id, float speed, float rotation, int range) {
 		this.id = id;
 		this.speed = speed;
 		this.rotation = rotation;

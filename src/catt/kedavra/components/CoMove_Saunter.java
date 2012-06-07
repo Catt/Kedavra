@@ -34,7 +34,7 @@ public class CoMove_Saunter extends CoMove implements Updatable {
 	 * @param walkAccel The rate of acceleration, when walking.
 	 * @param sprintAccel The rate of acceleration, when sprinting.
 	 */
-	public CoMove_Saunter(int id, float maxSpeed, float maxAccel) {
+	public CoMove_Saunter(String id, float maxSpeed, float maxAccel) {
 		this.id = id;
 		this.maxSpeed = maxSpeed;
 		//this.maxAccel = maxAccel;

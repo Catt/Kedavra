@@ -13,7 +13,7 @@ public abstract class EntityDamageable extends Entity implements Damageable{
 	
 	public EntityDamageable(GameplayState gameplayState, int id, int x, int y, int collisionType, int maxHealth){
 		super(gameplayState, id, x, y, collisionType);
-		health = new CoHealth(ID_HEALTH, maxHealth);
+		health = new CoHealth("Health", maxHealth);
 		addComponent(health);
 	}
 	

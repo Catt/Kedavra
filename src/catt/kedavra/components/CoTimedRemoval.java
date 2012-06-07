@@ -16,7 +16,7 @@ public class CoTimedRemoval extends Component implements Updatable {
 	private int time = 0;
 	private int counter= 0;
 	
-	public CoTimedRemoval(int id, int time){
+	public CoTimedRemoval(String id, int time){
 		this.id = id;
 		this.time = time;
 	}

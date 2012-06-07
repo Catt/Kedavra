@@ -21,8 +21,8 @@ public class Explosion_Small extends Entity {
 	 */
 	public Explosion_Small(GameplayState gameState, int id, int x, int y){
 		super(gameState, id, x, y, Collidable.CT_NONE);
-		addComponent(new CoAnimate(ID_DISPLAY, game.data.getImage("explosion_small"), 80, 80,50));
-		addComponent(new CoTimedRemoval(ID_MISC, 240));
+		addComponent(new CoAnimate("Animate", game.data.getImage("explosion_small"), 80, 80,50));
+		addComponent(new CoTimedRemoval("TimedRemoval", 240));
 		game.data.playSound("explosion_small",(getX()-game.getCamX()-400)/20,(getY()-game.getCamY()-300)/20);
 	}
 	@Override

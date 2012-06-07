@@ -23,7 +23,7 @@ public class CoRender extends Component implements Renderable {
 	 * @param id The unique id.
 	 * @param image The image to be drawn.
 	 */
-	public CoRender(int id, Image image) {
+	public CoRender(String id, Image image) {
 		this.id = id;
 		this.image = image;
 		this.image.setCenterOfRotation(image.getWidth()/2.0f, image.getHeight()/2.0f);

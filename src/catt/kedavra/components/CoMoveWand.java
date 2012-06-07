@@ -19,7 +19,7 @@ public class CoMoveWand extends CoMove implements Updatable {
 	 * @param id This component's unique id.
 	 * @param caster The entity that owns the wand.
 	 */
-	public CoMoveWand(int id, Entity caster) {
+	public CoMoveWand(String id, Entity caster) {
 		this.id = id;
 		this.caster = caster;
 	}

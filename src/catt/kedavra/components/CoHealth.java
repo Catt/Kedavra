@@ -16,7 +16,7 @@ public class CoHealth extends Component {
 	 * @param id this component's unique id
 	 * @param startHealth The maximum health of the entity. The current health will begin at maximum.
 	 */
-	public CoHealth(int id, int maxHealth){
+	public CoHealth(String id, int maxHealth){
 		this.id = id;
 		this.health = maxHealth;
 		this.maxHealth = maxHealth;

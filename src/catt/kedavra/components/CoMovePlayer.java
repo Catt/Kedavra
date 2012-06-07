@@ -47,7 +47,7 @@ public class CoMovePlayer extends CoMove implements Updatable {
 	 * @param walkAccel The rate of acceleration, when walking.
 	 * @param sprintAccel The rate of acceleration, when sprinting.
 	 */
-	public CoMovePlayer(int id, float baseSpeed, float maxWalk, float maxSprint, float walkAccel, float sprintAccel) {
+	public CoMovePlayer(String id, float baseSpeed, float maxWalk, float maxSprint, float walkAccel, float sprintAccel) {
 		this.id = id;
 		this.baseSpeed = baseSpeed;
 		this.maxWalk = maxWalk;

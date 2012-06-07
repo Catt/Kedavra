@@ -17,11 +17,11 @@ public class PetrificusTotalus extends Spell implements SpellStun {
 	
 	public PetrificusTotalus(GameplayState gameState, int id, int x, int y, float rotation) {
 		super(gameState, id, x, y, Collidable.CT_CIRCLE);
-		addComponent(new CoAnimate(ID_DISPLAY, game.data.getImage("aniPetTot"), 30, 8, 50));
+		addComponent(new CoAnimate("Animate", game.data.getImage("aniPetTot"), 30, 8, 50));
 		game.data.playSound("incendio");
 		this.rotation = rotation;
 		//Add movement.
-		addComponent(new CoMoveLinear(ID_MOVEMENT, .5f, rotation, 400));
+		addComponent(new CoMoveLinear("Move_Linear", .5f, rotation, 400));
 		//Set the bounding circle's size.
 		collisionRadii[0] = 15;
 	}
@@ -37,9 +37,10 @@ public class PetrificusTotalus extends Spell implements SpellStun {
 
 	@Override
 	public void stun(Entity recipient) {
-		if (recipient.getComponent(ID_MOVEMENT) != null){
-			if (!((CoMove)recipient.getComponent(ID_MOVEMENT)).getStunned())
-				recipient.addComponent(new CoStun(5, 5000));
+		CoMove motion = (CoMove)recipient.getComponent("Move_");
+		if (motion != null){
+			if (motion.getStunned())
+				recipient.addComponent(new CoStun("Stun", 5000));
 		}
 		
 	}

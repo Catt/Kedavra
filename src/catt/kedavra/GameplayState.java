@@ -17,7 +17,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
-import org.newdawn.slick.font.effects.OutlineWobbleEffect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
@@ -126,7 +125,7 @@ public class GameplayState extends BasicGameState {
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
-		//c//Add the new renderable Entities to the list before rendering.
+		//c//Add the new renderable Entities to the list before updating.
 		llUpdated.addAll(queueUpdate);
 		queueUpdate.clear();
 		llUpdated.removeAll(queueRemoveUpdate);

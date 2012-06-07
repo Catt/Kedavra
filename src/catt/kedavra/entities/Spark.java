@@ -28,8 +28,8 @@ public class Spark extends Entity implements Renderable, Updatable{
 	public Spark(GameplayState gameState, int id, int x, int y) {
 		super(gameState, id, x, y, Collidable.CT_NONE);
 		//c//Add sprite.
-		addComponent(new CoAnimate(ID_DISPLAY, game.data.getImage("aniSpark"), 50, 50, 50));
-		addComponent(new CoTimedRemoval(ID_MISC,190));
+		addComponent(new CoAnimate("Animate", game.data.getImage("aniSpark"), 50, 50, 50));
+		addComponent(new CoTimedRemoval("TimedRemoval",190));
 	}
 	
 	public void collision(StateBasedGame sbg, Collidable other, Vector2f offset) {

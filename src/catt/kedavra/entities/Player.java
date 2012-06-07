@@ -6,7 +6,9 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import catt.kedavra.GameplayState;
 import catt.kedavra.components.CoCastPlayer;
-import catt.kedavra.components.CoMovePlayer;
+import catt.kedavra.components.CoCtrl_PlayerMotion;
+import catt.kedavra.components.CoMotion_Basic;
+//import catt.kedavra.components.CoMovePlayer;
 import catt.kedavra.components.CoPing;
 import catt.kedavra.components.CoRender;
 import catt.kedavra.entities.spells.Incendio;
@@ -28,11 +30,14 @@ public class Player extends Entity {
 	public Player(GameplayState gameState, int id, int x, int y) {
 		super(gameState, id, x, y, Collidable.CT_CIRCLE);
 		//c//Add sprite.
-		addComponent(new CoRender(ID_DISPLAY, game.data.getImage("player")));
+		addComponent(new CoRender("Render", game.data.getImage("player")));
 		//c//Add WSAD movement with mouse orientation.
-		addComponent(new CoMovePlayer(ID_MOVEMENT, .11f, .25f, .4f, .0004f, .0007f));
-		addComponent(new CoCastPlayer(ID_MISC));
-		addComponent(new CoPing(4,100,100,Input.KEY_HOME));
+		//addComponent(new CoMovePlayer(ID_MOTION, .11f, .25f, .4f, .0004f, .0007f));
+		CoMotion_Basic motion = new CoMotion_Basic("Motion");
+		addComponent(motion);
+		addComponent(new CoCtrl_PlayerMotion("Ctrl_Motion",motion));
+		addComponent(new CoCastPlayer("Ctrl_Cast"));
+		addComponent(new CoPing("Ping",100,100,Input.KEY_HOME));
 		//c//Set the bounding circle's size.
 		collisionRadii[0] = 25;
 		

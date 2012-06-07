@@ -17,7 +17,7 @@ public class CoCull extends Component implements Updatable{
 	 * 
 	 * @param id This Component's unique id.
 	 */
-	public CoCull(int id, int key) {
+	public CoCull(String id, int key) {
 		this.id = id;
 		this.key = key;
 		

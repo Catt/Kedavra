@@ -27,9 +27,9 @@ public class Chicken extends EntityDamageable {
 	 */
 	public Chicken(GameplayState gameState, int id, int x, int y){
 		super(gameState, id, x, y, Collidable.CT_CIRCLE, HEALTH);
-		addComponent(new CoAnimate(ID_DISPLAY, gameState.data.getImage("chicken_top"), 50, 40, 200));
-		addComponent(new CoMove_Saunter(ID_MOVEMENT, 0.2f, 0.05f));
-		addComponent(new CoCull(ID_MISC,Input.KEY_DELETE));
+		addComponent(new CoAnimate("Animate", gameState.data.getImage("chicken_top"), 50, 40, 200));
+		addComponent(new CoMove_Saunter("Move_Saunter", 0.2f, 0.05f));
+		addComponent(new CoCull("Cull",Input.KEY_DELETE));
 		collisionRadii[0] = 20;
 	}
 	

@@ -22,5 +22,8 @@ public interface Motion {
 	public void setSpeed(float speed);
 	public void setTurnSpeed(float turnSpeed);
 	public void setFriction(float friction);
+	public void stop_motion();
+	public void stop_turn();
+	public void stop_strafe();
 
 }

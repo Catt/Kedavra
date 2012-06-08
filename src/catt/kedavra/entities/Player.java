@@ -5,6 +5,7 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import catt.kedavra.GameplayState;
+import catt.kedavra.components.CoCam_PlayerCenter;
 import catt.kedavra.components.CoCastPlayer;
 import catt.kedavra.components.CoCtrl_PlayerMotion;
 import catt.kedavra.components.CoMotion_Basic;
@@ -36,6 +37,7 @@ public class Player extends Entity {
 		CoMotion_Basic motion = new CoMotion_Basic("Motion");
 		addComponent(motion);
 		addComponent(new CoCtrl_PlayerMotion("Ctrl_Motion",motion));
+		addComponent(new CoCam_PlayerCenter("Cam_PlayerCenter"));
 		addComponent(new CoCastPlayer("Ctrl_Cast"));
 		addComponent(new CoPing("Ping",100,100,Input.KEY_HOME));
 		//c//Set the bounding circle's size.

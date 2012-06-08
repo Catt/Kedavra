@@ -4,8 +4,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 
-import catt.kedavra.GameplayState;
-
 /**
  * The CoMovePlayer Component can be added to an Entity to allow for 2-axis movement with the WSAD keys, as well as sprite orientation
  * @author Zhengman77
@@ -244,11 +242,11 @@ public class CoMovePlayer extends CoMove implements Updatable {
 			owner.addX(speedX*delta);
 			owner.addY(speedY*delta);
 			//c//Move the camera.
-			GameplayState gps = (GameplayState)sbg.getCurrentState();
-			gps.addCamX(speedX*delta);
-			gps.addCamY(speedY*delta);
+			owner.getGame().addCamX(speedX*delta);
+			owner.getGame().addCamY(speedY*delta);
 			//Rotation
-			rotation = (float)Math.toDegrees(Math.atan2((input.getMouseY()-(owner.getY()-gps.getCamY())),(input.getMouseX()-(owner.getX()-gps.getCamX()))));
+			rotation = (float)Math.toDegrees(Math.atan2((input.getMouseY()-(owner.getY()-owner.getGame().getCamY())),
+					                                    (input.getMouseX()-(owner.getX()-owner.getGame().getCamX()))));
 			owner.setRotation(rotation);
 		}
 	}

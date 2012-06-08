@@ -38,18 +38,19 @@ public class CoCtrl_PlayerMotion extends CoMove implements Updatable {
 		this.motion = motion;
 		this.id = id;
 		this.speed_walk = 3;
-		this.speed_sprint = 5;
+		this.speed_sprint = 6;
 		this.accel_walk = .3f;
-		this.accel_sprint = .5f;
+		this.accel_sprint = .6f;
 		this.friction = 0.0001f;
 		motion.setFriction(friction);
+		motion.setTurnSpeed(3.f);
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
 		if (!getStunned()){
 			Input input = gc.getInput();
 			//c//Toggle sprint.
-			if(input.isKeyPressed(Input.KEY_LSHIFT)) {
+			if(input.isKeyDown(Input.KEY_LSHIFT)) {
 				motion.setSpeed(speed_sprint);
 				motion.setAcceleration(accel_sprint);
 			}
@@ -59,15 +60,28 @@ public class CoCtrl_PlayerMotion extends CoMove implements Updatable {
 			}
 			
 			//c//Motion commands.
-			if(input.isKeyPressed(Input.KEY_W))
+			if(input.isKeyPressed(Input.KEY_W)){
 				motion.forward();
-			if(input.isKeyPressed(Input.KEY_S))
+			}
+			if(input.isKeyPressed(Input.KEY_S)){
 				motion.backward();
-			if(input.isKeyPressed(Input.KEY_A))
+			}
+			if(input.isKeyPressed(Input.KEY_A)){
 				motion.strafe_left();
-			if(input.isKeyPressed(Input.KEY_D))
+			}
+			if(input.isKeyPressed(Input.KEY_D)){
 				motion.strafe_right();
+			}
+			if(!input.isKeyDown(Input.KEY_W) && !input.isKeyDown(Input.KEY_S)){
+				motion.stop_motion();
+			}
+			if(!input.isKeyDown(Input.KEY_A) && !input.isKeyDown(Input.KEY_D)){
+				motion.stop_strafe();
+			}
 			
+			float rotation = (float)Math.toDegrees(Math.atan2((input.getMouseY()-(owner.getY()-owner.getGame().getCamY())),
+                    (input.getMouseX()-(owner.getX()-owner.getGame().getCamX()))));
+			motion.turn(rotation);
 			
 		}
 	}

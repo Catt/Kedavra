@@ -158,8 +158,8 @@ public abstract class Entity implements Renderable, Updatable, Collidable{
 	 * @param addend The value to be added.
 	 */
 	public void addInDirection(float addend){
-		Vector2f v = new Vector2f(addend,0);
-		v.setTheta(this.rotation);
+		Vector2f v = new Vector2f(Math.abs(addend),0);
+		v.setTheta((addend>0)?this.rotation:this.rotation+180);
 		this.position.add(v);
 	}
 	/**
@@ -167,8 +167,8 @@ public abstract class Entity implements Renderable, Updatable, Collidable{
 	 * @param addend The value to be added.
 	 */
 	public void addInDirection(float addend, double rotation){
-		Vector2f v = new Vector2f(addend,0);
-		v.setTheta(rotation);
+		Vector2f v = new Vector2f(Math.abs(addend),0);
+		v.setTheta((addend>0)?rotation:rotation+180);
 		this.position.add(v);
 	}
 	
@@ -312,6 +312,7 @@ public abstract class Entity implements Renderable, Updatable, Collidable{
 				updaters.add((Updatable) c);
 			}
 		}
+		addQueue.clear();
 	}
 
 	private void removeQueue(){
@@ -323,6 +324,7 @@ public abstract class Entity implements Renderable, Updatable, Collidable{
 				updaters.remove((Updatable) c);
 			}
 		}
+		removeQueue.clear();
 	}
 
 }

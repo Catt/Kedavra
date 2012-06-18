@@ -4,6 +4,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
 import catt.kedavra.entities.Entity;
+import catt.kedavra.entities.Wand;
 
 /**
  * This component controls how Wand moves around the screen.
@@ -27,9 +28,9 @@ public class CoMoveWand extends CoMove implements Updatable {
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
 		if(!getStunned()){
-			owner.setX((float)(caster.getX()+caster.getCollisionRadii()[0]*Math.cos(Math.toRadians(caster.getRotation()))));
-			owner.setY((float)(caster.getY()+caster.getCollisionRadii()[0]*Math.sin(Math.toRadians(caster.getRotation()))));
 			owner.setRotation(caster.getRotation());
+			owner.setX((float)(caster.getX()+caster.getSpeedX()*delta+(caster.getCollisionRadii()[0]+Wand.LENGTH/2-4)*Math.cos(Math.toRadians(owner.getRotation()))));
+			owner.setY((float)(caster.getY()+caster.getSpeedY()*delta+(caster.getCollisionRadii()[0]+Wand.LENGTH/2-4)*Math.sin(Math.toRadians(owner.getRotation()))));
 		}
 	}
 

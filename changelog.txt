@@ -1,5 +1,12 @@
 _*_*_*_*_ FIXES AND CHANGES _*_*_*_*_
  * * * *   
+
+[20][2012-06-18-11:23][z]
+	(001) Fixed case of wand trailing after player.
+	(002) For (001), added getSpeedX, getSpeedY, setSpeedX, and setSpeedY methods to Entity.
+	(003) Increased the length of wand_brown.png.
+	(004) For (003), changed the constant Wand.LENGTH from 20 to 30.
+
 [19][2012-06-06-18:10]
 	(001) Created/implemented Component ID system in entities. This standardizes the component retrieval process.
 	(002) Fixed getComponent method in Entity. Now it searches for the component with the specified ID rather than

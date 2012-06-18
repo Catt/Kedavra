@@ -9,6 +9,7 @@ import catt.kedavra.components.CoCam_PlayerCenter;
 import catt.kedavra.components.CoCastPlayer;
 import catt.kedavra.components.CoCtrl_PlayerMotion;
 import catt.kedavra.components.CoMotion_Basic;
+import catt.kedavra.components.CoMovePlayer;
 //import catt.kedavra.components.CoMovePlayer;
 import catt.kedavra.components.CoPing;
 import catt.kedavra.components.CoRender;
@@ -33,10 +34,10 @@ public class Player extends Entity {
 		//c//Add sprite.
 		addComponent(new CoRender("Render", game.data.getImage("player")));
 		//c//Add WSAD movement with mouse orientation.
-		//addComponent(new CoMovePlayer(ID_MOTION, .11f, .25f, .4f, .0004f, .0007f));
+		addComponent(new CoMovePlayer("ID_MOTION", .11f, .25f, .4f, .0004f, .0007f));
 		CoMotion_Basic motion = new CoMotion_Basic("Motion");
 		addComponent(motion);
-		addComponent(new CoCtrl_PlayerMotion("Ctrl_Motion",motion));
+		//addComponent(new CoCtrl_PlayerMotion("Ctrl_Motion",motion));
 		addComponent(new CoCam_PlayerCenter("Cam_PlayerCenter"));
 		addComponent(new CoCastPlayer("Ctrl_Cast"));
 		addComponent(new CoPing("Ping",100,100,Input.KEY_HOME));

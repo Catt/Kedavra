@@ -39,6 +39,8 @@ public abstract class Entity implements Renderable, Updatable, Collidable{
 	protected int collisionRadii [] = null;
 	/** This Entity's rotation in 2D space. */
 	protected float rotation = 0;
+	protected float speedX = 0;
+	protected float speedY = 0;
 	/** A list of all components to be added before the next update. */
 	private LinkedList<Component> addQueue = new LinkedList<Component>();
 	/** A list of all components to be removed before the next update. */
@@ -221,6 +223,22 @@ public abstract class Entity implements Renderable, Updatable, Collidable{
 	}
 	
 	/**
+	 * Assigns the x-axis speed of the Entity to a value.
+	 * @param speedX
+	 */
+	public void setSpeedX(float speedX) {
+		this.speedX = speedX;
+	}
+	
+	/**
+	 * Fetches the speedX value of the Entity.
+	 * @return The speedX value.
+	 */
+	public float getSpeedX() {
+		return speedX;
+	}
+	
+	/**
 	 * Fetches the y coordinate of this Entity's position.
 	 * @return The y coordinate.
 	 */
@@ -242,6 +260,22 @@ public abstract class Entity implements Renderable, Updatable, Collidable{
 	 */
 	public void addY(float addend){
 		this.position.set(position.getX(),position.getY() + addend);
+	}
+	
+	/**
+	 * Assigns the y-axis speed of the Entity to a value.
+	 * @param speedY
+	 */
+	public void setSpeedY(float speedY) {
+		this.speedY = speedY;
+	}
+	
+	/**
+	 * Fetches the speedY value of the entity.
+	 * @return The speedY value.
+	 */
+	public float getSpeedY() {
+		return speedY;
 	}
 	
 	/**

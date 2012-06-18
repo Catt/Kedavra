@@ -16,7 +16,7 @@ import catt.kedavra.components.CoRender;
 public class Wand extends Entity {
 	
 	/** The standard length of a wand. */
-	public static final int LENGTH = 20;
+	public static final int LENGTH = 30;
 	
 	/**
 	 * Creates a new Wand entity.

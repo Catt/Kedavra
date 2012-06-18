@@ -241,6 +241,8 @@ public class CoMovePlayer extends CoMove implements Updatable {
 			//Establish position
 			owner.addX(speedX*delta);
 			owner.addY(speedY*delta);
+			owner.setSpeedX(speedX);
+			owner.setSpeedY(speedY);
 			//c//Move the camera.
 			owner.getGame().addCamX(speedX*delta);
 			owner.getGame().addCamY(speedY*delta);
